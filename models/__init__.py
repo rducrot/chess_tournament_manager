@@ -1,1 +1,3 @@
-__all__ = ['tournament', 'player', 'round']
+"""Models package."""
+
+__all__ = ['tournament', 'player', 'round', 'match']
