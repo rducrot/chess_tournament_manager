@@ -1,7 +1,7 @@
 """Define the rounds."""
 
 from typing import List
-from match import Match
+from .match import Match
 
 
 class Round:

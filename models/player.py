@@ -1,7 +1,11 @@
 """Define the players."""
 
+PLAYERS_LAST_NAMES = ["DUPONT", "MARTIN", "PEREZ", "ROBERT"]
+PLAYERS_FIRST_NAMES = ["Camille", "Charlie", "Dominique", "Sam"]
+PLAYERS_BIRTH_DATES = ["03/08/1995", "25/02/2000", "09/12/1987", "10/10/1996"]
 GENDER_M = 0
 GENDER_F = 1
+GENDERS = [GENDER_M, GENDER_F]
 
 
 class Player:
