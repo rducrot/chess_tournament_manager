@@ -1,8 +1,9 @@
 from controller import Controller
-from models import tournament
+from models.tournament import Tournament
+from constants import TIME_CONTROL_BLITZ
 
-tournois = tournament.Tournament("Régional 2022", "Strasbourg", "01/05/2022",
-                                 tournament.TIME_CONTROL_BLITZ, "Premier tournoi de la saison")
+tournois = Tournament("Régional 2022", "Strasbourg", "01/05/2022",
+                      TIME_CONTROL_BLITZ, "Premier tournois de la saison")
 
 
 def main():

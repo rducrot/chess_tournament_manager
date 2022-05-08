@@ -3,12 +3,7 @@
 from typing import List
 from .player import Player
 from .round import Round
-
-TIME_CONTROL_BULLET = 0
-TIME_CONTROL_BLITZ = 1
-TIME_CONTROL_RAPID = 2
-DEFAULT_NUMBER_OF_ROUNDS = 4
-NUMBER_OF_PLAYERS = 8
+from constants import DEFAULT_NUMBER_OF_ROUNDS
 
 
 class Tournament:
