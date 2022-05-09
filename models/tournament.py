@@ -18,7 +18,7 @@ class Tournament:
         self.description = description
         self.number_of_rounds = number_of_rounds
         self.rounds: List[Round] = []
-        self.players: List[Player] = []
+        self.players_ids: List = []
 
     def __str__(self):
         return f"Tournois {self.name} du {self.date} à {self.place}"
