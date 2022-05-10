@@ -18,7 +18,7 @@ class Player:
 
     def __str__(self):
 #        return f"{self.first_name} {self.last_name} ({self.rank} points)"
-        return f"{self.first_name} {self.last_name} ({self.id})"
+        return f"{self.first_name} {self.last_name} ({self.score})"
 
     def __repr__(self):
         return str(self)
