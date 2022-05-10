@@ -15,10 +15,10 @@ class Player:
         self.gender = gender
         self.rank = rank
         self.score = 0
+        self.previous_opponent = None
 
     def __str__(self):
-#        return f"{self.first_name} {self.last_name} ({self.rank} points)"
-        return f"{self.first_name} {self.last_name} ({self.score})"
+        return f"{self.first_name} {self.last_name} ({self.rank} points, score : {self.score})"
 
     def __repr__(self):
         return str(self)

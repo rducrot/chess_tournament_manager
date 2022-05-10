@@ -8,13 +8,15 @@ from models.player import Player
 from models.round import Round
 from models.tournament import Tournament
 from views.base import View
+from views.tournament import TournamentView
 from .swisssystem import SwissSystem
 
 
 class Controller:
     """Main controller."""
-    def __init__(self, view: View, tournament_system: SwissSystem, tournament: Tournament):
+    def __init__(self, view: View, tournament_view: TournamentView, tournament_system: SwissSystem, tournament: Tournament):
         self.view = view
+        self.tournament_view = tournament_view
         self.tournament_system = tournament_system
         self.tournament = tournament
 
@@ -64,9 +66,9 @@ class Controller:
             else:
                 self.tournament_system.sort_players_by_score(self.tournament.players)
                 matches = self.tournament_system.make_matches_list(self.tournament.players)
-            self.view.show_matches_players_list(matches)
+            self.tournament_view.show_matches_list(matches)
             for match in matches:
-                new_match = self.view.prompt_enter_match_score(match)
+                new_match = self.tournament_view.prompt_enter_match_score(match)
                 tournament_round.matches.append(new_match)
             for player in self.tournament.players:
                 self.tournament_system.update_player_score(player, tournament_round.matches)
