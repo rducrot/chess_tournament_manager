@@ -72,4 +72,3 @@ class Controller:
                 tournament_round.matches.append(new_match)
             for player in self.tournament.players:
                 self.tournament_system.update_player_score(player, tournament_round.matches)
-            print(tournament_round.matches)

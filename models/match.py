@@ -6,6 +6,8 @@ from models.player import Player
 
 
 class Result(NamedTuple):
+    """Result Model.
+    Score of a player for a match."""
     player: Player
     score: float
 
@@ -22,6 +24,7 @@ class Result(NamedTuple):
 
 
 class Match(NamedTuple):
+    """Match model."""
     result_first_player: Result
     result_second_player: Result
 

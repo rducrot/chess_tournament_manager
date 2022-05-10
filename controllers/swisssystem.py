@@ -12,7 +12,7 @@ class SwissSystem:
 
     def sort_players_by_score(self, players: list):
         """Sort a list of players by player score."""
-        players.sort(key=lambda x: (x.rank, x.score), reverse=True)
+        players.sort(key=lambda x: x.score, reverse=True)
 
     def make_matches_list_first_round(self, players: List[Player]) -> List[tuple]:
         """Define a list of matches for the first round."""

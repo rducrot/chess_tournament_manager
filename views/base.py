@@ -6,7 +6,7 @@ from constants import DEFAULT_NUMBER_OF_ROUNDS, UPDATE_TOURNAMENT_PROMPT, UPDATE
 
 class View:
 
-    def prompt_ask_new_tournament(self):
+    def prompt_ask_new_tournament(self) -> bool:
         """Ask for a new tournament"""
         update_tournament = input("Souhaitez-vous initialiser un nouveau tournoi ? (O/N)")
         if update_tournament != UPDATE_TOURNAMENT_PROMPT:
@@ -27,7 +27,7 @@ class View:
         tournament = Tournament(name, place, date, time_control, description, number_of_rounds)
         return tournament
 
-    def prompt_ask_update_players_list(self):
+    def prompt_ask_update_players_list(self) -> bool:
         update_players_list = input("Souhaitez-vous mettre à jour la liste des joueurs ? (O/N)")
         if update_players_list != UPDATE_PLAYERS_LIST_PROMPT:
             return False
