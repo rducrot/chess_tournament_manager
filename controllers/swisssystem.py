@@ -1,11 +1,14 @@
 """Define the Swiss System Tournament controller."""
 from typing import List
 
+from constants import FIRST_ROUND_ID
 from models.match import Match
 from models.player import Player
+from models.round import Round
+from views.tournament import TournamentView
 
 
-class SwissSystem:
+class SwissSystemController:
 
     def sort_players_by_rank(self, players: List[Player]):
         """Sort a list of players by player rank."""
@@ -59,9 +62,26 @@ class SwissSystem:
 
         return matches
 
-    def update_player_score(self, player, matches: List[Match]):
+    def update_player_score(self, player: Player, matches: List[Match]):
         """Update the total score of a player with the result of the match."""
         for match in matches:
             for result in match:
                 if player == result.player:
                     player.score += result.score
+
+    def make_a_round(self, tournament_round: Round, tournament_view: TournamentView, players: List[Player]):
+        """Implements the progression of a round following the swiss system."""
+        if tournament_round == FIRST_ROUND_ID:
+            self.sort_players_by_rank(players)
+            matches = self.make_matches_list_first_round(players)
+        else:
+            self.sort_players_by_score(players)
+            matches = self.make_matches_list(players)
+
+        tournament_view.show_matches_list(matches)
+
+        for match in matches:
+            new_match = tournament_view.prompt_enter_match_score(match)
+            tournament_round.matches.append(new_match)
+        for player in players:
+            self.update_player_score(player, tournament_round.matches)
