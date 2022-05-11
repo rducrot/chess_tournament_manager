@@ -63,3 +63,6 @@ class Controller:
 
         for tournament_round in self.tournament.rounds:
             self.tournament_controller.make_a_round(tournament_round, self.tournament_view, self.tournament.players)
+
+        self.tournament_controller.sort_players_by_score(self.tournament.players)
+        self.tournament_view.show_tournament_results(self.tournament.players)

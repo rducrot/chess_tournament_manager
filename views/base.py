@@ -16,9 +16,9 @@ class View:
     def prompt_ask_new_tournament(self, tournament: Tournament) -> bool:
         """Ask for a new tournament."""
         print(SEPARATOR)
-        print("Le tournois actuel est le suivant :")
+        print("Le tournois actuel est le suivant : ")
         print(str(tournament))
-        update_tournament = input("Souhaitez-vous initialiser un nouveau tournoi ? (O/N)")
+        update_tournament = input("Souhaitez-vous initialiser un nouveau tournoi ? (O/N) ")
         if update_tournament != UPDATE_TOURNAMENT_PROMPT:
             return False
         return True
@@ -52,10 +52,10 @@ class View:
     def prompt_ask_update_players_list(self, players: List[Player]) -> bool:
         """Ask to update the current players list."""
         print(SEPARATOR)
-        print("Les joueurs du tournois sont les suivants :")
+        print("Les joueurs du tournois sont les suivants : ")
         for player in players:
             print(player)
-        update_players_list = input("Souhaitez-vous mettre à jour la liste des joueurs ? (O/N)")
+        update_players_list = input("Souhaitez-vous mettre à jour la liste des joueurs ? (O/N) ")
         if update_players_list != UPDATE_PLAYERS_LIST_PROMPT:
             return False
         return True

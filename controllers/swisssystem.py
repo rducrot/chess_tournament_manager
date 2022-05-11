@@ -50,10 +50,10 @@ class SwissSystemController:
                     second_player = next(iter_players)
                 except StopIteration:
                     break
-                if len(player_without_match_ids) > 1:
-                    if first_player.previous_opponent == second_player.get_id():
-                        second_player = next(iter_players)
                 player_without_match_ids.remove(first_player.get_id())
+                if first_player.previous_opponent == second_player.get_id():
+                    if len(player_without_match_ids) > 1:
+                        second_player = next(iter_players)
                 player_without_match_ids.remove(second_player.get_id())
                 first_player.previous_opponent = second_player.get_id()
                 second_player.previous_opponent = first_player.get_id()
