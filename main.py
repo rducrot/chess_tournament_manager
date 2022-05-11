@@ -1,12 +1,9 @@
-from models.tournament import Tournament
-
+from constants import TIME_CONTROL_BLITZ
 from controllers.base import Controller
 from controllers.swisssystem import SwissSystem
-
+from models.tournament import Tournament
 from views.base import View
 from views.tournament import TournamentView
-
-from constants import TIME_CONTROL_BLITZ
 
 
 def main():

@@ -1,7 +1,7 @@
 """Base view."""
+from constants import DEFAULT_NUMBER_OF_ROUNDS, UPDATE_TOURNAMENT_PROMPT, UPDATE_PLAYERS_LIST_PROMPT
 from models.player import Player
 from models.tournament import Tournament
-from constants import DEFAULT_NUMBER_OF_ROUNDS, UPDATE_TOURNAMENT_PROMPT, UPDATE_PLAYERS_LIST_PROMPT
 
 
 class View:

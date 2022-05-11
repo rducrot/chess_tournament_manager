@@ -1,9 +1,9 @@
 """Define the Tournament."""
-
 from typing import List
+
+from constants import DEFAULT_NUMBER_OF_ROUNDS
 from .player import Player
 from .round import Round
-from constants import DEFAULT_NUMBER_OF_ROUNDS
 
 
 class Tournament:

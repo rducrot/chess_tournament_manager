@@ -5,6 +5,7 @@ from constants import WIN_PROMPT, WIN_SCORE, LOSE_PROMPT, LOSE_SCORE, DRAW_PROMP
 
 
 class TournamentView:
+
     def show_matches_list(self, matches):
         """Print the matches of the turn."""
         print(f"Liste des matchs du tour :")

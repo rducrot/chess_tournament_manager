@@ -60,7 +60,7 @@ class Controller:
         self.initialize_new_players_list()
 
         for tournament_round in self.tournament.rounds:
-            if tournament_round.id == FIRST_ROUND_ID:
+            if tournament_round == FIRST_ROUND_ID:
                 self.tournament_system.sort_players_by_rank(self.tournament.players)
                 matches = self.tournament_system.make_matches_list_first_round(self.tournament.players)
             else:

@@ -1,7 +1,7 @@
 """Define the rounds."""
-
 from itertools import count
 from typing import List
+
 from .match import Match
 
 
@@ -11,7 +11,7 @@ class Round:
     id_iter = count()
 
     def __init__(self, name):
-        self.id = next(self.id_iter)
+        self._id = next(self.id_iter)
         self.name = name
         self.matches: List[Match] = []
 
@@ -20,3 +20,6 @@ class Round:
 
     def __repr__(self):
         return str(self)
+
+    def __eq__(self, other):
+        return self._id == other
