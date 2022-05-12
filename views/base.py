@@ -41,10 +41,13 @@ class View:
                 time_control = TIME_CONTROL_RAPID
                 break
         description = input("Description : ")
-        number_of_rounds = input("Nombre de tours (Par défaut : 4) : ")
-        if not number_of_rounds:
-            number_of_rounds = DEFAULT_NUMBER_OF_ROUNDS
-
+        while True:
+            number_of_rounds = input(f"Nombre de tours (Par défaut : {DEFAULT_NUMBER_OF_ROUNDS}) : ")
+            if number_of_rounds is int:
+                break
+            if not number_of_rounds:
+                number_of_rounds = DEFAULT_NUMBER_OF_ROUNDS
+                break
         tournament = Tournament(name, place, date, time_control, description, number_of_rounds)
         print(tournament)
         return tournament
@@ -67,7 +70,7 @@ class View:
         first_name = input("Prénom du joueur : ")
         date_of_birth = input("Date de naissance : ")
         while True:
-            gender_prompt = input("Genre : ")
+            gender_prompt = input("Genre : (H/F)")
             if gender_prompt == GENDER_M_PROMPT:
                 gender = GENDER_M
                 break
@@ -75,9 +78,8 @@ class View:
                 gender = GENDER_W
                 break
         while True:
-            rank_prompt = input("Rang : ")
-            if rank_prompt is int:
-                rank = rank_prompt
+            rank = input("Rang : ")
+            if rank is int:
                 break
 
         new_player = Player(last_name, first_name, date_of_birth, gender, rank)

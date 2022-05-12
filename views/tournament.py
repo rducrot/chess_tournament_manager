@@ -1,15 +1,18 @@
 """Define the Tournament View."""
+from typing import List
 
+from constants import *
 from models.match import Match, Result
-from constants import WIN_PROMPT, WIN_SCORE, LOSE_PROMPT, LOSE_SCORE, DRAW_PROMPT, DRAW_SCORE
-
+from models.player import Player
 
 class TournamentView:
     def show_matches_list(self, matches):
         """Print the matches of the turn."""
         print(f"Liste des matchs du tour :")
+        print(SEPARATOR)
         for match in matches:
             print(str(match))
+        print(SEPARATOR)
 
     def prompt_enter_match_score(self, players_in_match: tuple) -> Match:
         """Prompt to add the scores of the players of a match."""
@@ -32,3 +35,9 @@ class TournamentView:
 
         match = Match(Result(first_player, first_player_score), Result(second_player, second_player_score))
         return match
+
+    def show_tournament_results(self, players: List[Player]):
+        print(SEPARATOR)
+        print("Résultats du tournois : ")
+        for player in players:
+            print(player)

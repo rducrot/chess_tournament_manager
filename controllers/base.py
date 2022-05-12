@@ -34,8 +34,8 @@ class Controller:
             number_of_rounds=serialized_tournament[DB_TOURNAMENT_NUMBER_OF_ROUNDS])
         self.tournament = tournament
 
-    def _save_tournament(self):
-        """Save the tournament to the database."""
+    def _save_new_tournament(self):
+        """Save a new tournament to the database."""
         tournament_table = self.db.table("tournament")
         tournament_table.truncate()
         serialized_tournament = {
@@ -47,6 +47,9 @@ class Controller:
             DB_TOURNAMENT_NUMBER_OF_ROUNDS: self.tournament.number_of_rounds
         }
         tournament_table.insert(serialized_tournament)
+
+    def save_tournament_with_results(self):
+        tournament_table = self.db.table("tournament")
 
     def _get_players(self):
         """Get the players from the database."""
@@ -89,7 +92,7 @@ class Controller:
         new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
         if new_tournament:
             self.view.prompt_update_current_tournament()
-            self._save_tournament()
+            self._save_new_tournament()
         self._init_rounds()
 
     def initialize_new_players_list(self):

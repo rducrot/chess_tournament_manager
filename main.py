@@ -1,5 +1,6 @@
 """App entry point."""
 from tinydb import TinyDB
+
 from controllers.base import Controller
 from controllers.swisssystem import SwissSystemController
 from views.base import View
