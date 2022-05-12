@@ -1,7 +1,7 @@
 """Define the main controller."""
-from random import choice, randrange
+from tinydb import TinyDB
 
-from constants import NUMBER_OF_PLAYERS, PLAYERS_LAST_NAMES, PLAYERS_FIRST_NAMES, PLAYERS_BIRTH_DATES, GENDERS
+from constants import *
 from models.player import Player
 from models.round import Round
 from models.tournament import Tournament
@@ -15,23 +15,68 @@ class Controller:
     def __init__(self, view: View,
                  tournament_view: TournamentView,
                  tournament_controller: SwissSystemController,
-                 tournament: Tournament):
+                 db: TinyDB):
         self.view = view
         self.tournament_view = tournament_view
         self.tournament_controller = tournament_controller
+        self.db = db
+
+    def _get_tournament(self):
+        """Get the tournament from the database."""
+        tournament_table = self.db.table("tournament")
+        serialized_tournament = tournament_table.all()[0]
+        tournament = Tournament(
+            name=serialized_tournament[DB_TOURNAMENT_NAME],
+            place=serialized_tournament[DB_TOURNAMENT_PLACE],
+            date=serialized_tournament[DB_TOURNAMENT_DATE],
+            time_control=serialized_tournament[DB_TOURNAMENT_TIME_CONTROL],
+            description=serialized_tournament[DB_TOURNAMENT_DESCRIPTION],
+            number_of_rounds=serialized_tournament[DB_TOURNAMENT_NUMBER_OF_ROUNDS])
         self.tournament = tournament
 
-    def get_players(self):
-        """Add players to the tournament."""
-        while len(self.tournament.players) < NUMBER_OF_PLAYERS:
-            new_player = Player(choice(PLAYERS_LAST_NAMES),
-                                choice(PLAYERS_FIRST_NAMES),
-                                choice(PLAYERS_BIRTH_DATES),
-                                choice(GENDERS),
-                                randrange(980, 1400))
-            self.tournament.players.append(new_player)
+    def _save_tournament(self):
+        """Save the tournament to the database."""
+        tournament_table = self.db.table("tournament")
+        tournament_table.truncate()
+        serialized_tournament = {
+            DB_TOURNAMENT_NAME: self.tournament.name,
+            DB_TOURNAMENT_PLACE: self.tournament.place,
+            DB_TOURNAMENT_DATE: self.tournament.date,
+            DB_TOURNAMENT_TIME_CONTROL: self.tournament.time_control,
+            DB_TOURNAMENT_DESCRIPTION: self.tournament.description,
+            DB_TOURNAMENT_NUMBER_OF_ROUNDS: self.tournament.number_of_rounds
+        }
+        tournament_table.insert(serialized_tournament)
 
-    def get_rounds(self):
+    def _get_players(self):
+        """Get the players from the database."""
+        players_table = self.db.table("players")
+        serialized_players = players_table.all()
+
+        for serialized_player in serialized_players:
+            player = Player(
+                last_name=serialized_player[DB_PLAYER_LAST_NAME],
+                first_name=serialized_player[DB_PLAYER_FIRST_NAME],
+                date_of_birth=serialized_player[DB_PLAYER_DATE_OF_BIRTH],
+                gender=serialized_player[DB_PLAYER_GENDER],
+                rank=serialized_player[DB_PLAYER_RANK])
+            self.tournament.players.append(player)
+
+    def _save_players(self):
+        """Save the players to the database."""
+        players_table = self.db.table("players")
+        players_table.truncate()
+        for player in self.tournament.players:
+            serialized_player = {
+                DB_PLAYER_LAST_NAME: player.last_name,
+                DB_PLAYER_FIRST_NAME: player.first_name,
+                DB_PLAYER_DATE_OF_BIRTH: player.date_of_birth,
+                DB_PLAYER_GENDER: player.gender,
+                DB_PLAYER_RANK: player.rank
+            }
+            players_table.insert(serialized_player)
+
+    def _init_rounds(self):
         """Add rounds to the tournament."""
         round_number = 1
         while len(self.tournament.rounds) < self.tournament.number_of_rounds:
@@ -40,20 +85,24 @@ class Controller:
 
     def initialize_new_tournament(self):
         """Ask to initialize a new tournament."""
+        self._get_tournament()
         new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
         if new_tournament:
             self.view.prompt_update_current_tournament()
-        self.get_rounds()
+            self._save_tournament()
+        self._init_rounds()
 
     def initialize_new_players_list(self):
         """Ask to initialize a new players list."""
-        self.get_players()
+        self._get_players()
+        self.tournament_controller.sort_players_by_rank(self.tournament.players)
         update_players_list = self.view.prompt_ask_update_players_list(self.tournament.players)
         if update_players_list:
             self.tournament.players = []
             while len(self.tournament.players) < NUMBER_OF_PLAYERS:
                 new_player = self.view.prompt_add_a_player()
                 self.tournament.players.append(new_player)
+            self._save_players()
 
     def run(self):
 

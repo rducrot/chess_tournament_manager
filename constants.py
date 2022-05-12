@@ -1,10 +1,14 @@
 """Constants."""
-# Global
+# GLOBAL
 APP_NAME = "Chess Tournament Manager"
 
 UPDATE_TOURNAMENT_PROMPT = "O"
 UPDATE_PLAYERS_LIST_PROMPT = "O"
 
+SEPARATOR_TYPE = "#"
+SEPARATOR = SEPARATOR_TYPE * 79
+
+# MODELS
 # Tournament
 NUMBER_OF_PLAYERS = 8
 DEFAULT_NUMBER_OF_ROUNDS = 4
@@ -17,14 +21,11 @@ TIME_CONTROL_BULLET_PROMPT = "BU"
 TIME_CONTROL_RAPID_PROMPT = "R"
 
 # Player
-PLAYERS_LAST_NAMES = ["DUPONT", "DUPUIS", "JOHNSON", "KAPOOR", "KHAN", "KLEIN",
-                      "MARTIN", "PEREZ", "QUENTIN", "ROBERT", "THIERRY", "THOMAS"]
-PLAYERS_FIRST_NAMES = ["Alex", "Camille", "Charlie", "Dominique", "Fred", "Gwen",
-                       "Joe", "Johnny", "Jordan", "Lauren", "Max", "Sam"]
-PLAYERS_BIRTH_DATES = ["03/08/1995", "25/02/2000", "09/12/1987", "10/10/1996", "02/07/1998", "13/07/2002", "22/09/1990"]
 GENDER_M = 0
-GENDER_F = 1
-GENDERS = [GENDER_M, GENDER_F]
+GENDER_W = 1
+
+GENDER_M_PROMPT = "H"
+GENDER_W_PROMPT = "F"
 
 # Round
 FIRST_ROUND_ID = 0
@@ -38,5 +39,16 @@ WIN_PROMPT = "V"
 LOSE_PROMPT = "D"
 DRAW_PROMPT = "N"
 
-SEPARATOR_TYPE = "#"
-SEPARATOR = SEPARATOR_TYPE * 79
+# DATABASE
+DB_TOURNAMENT_NAME = "name"
+DB_TOURNAMENT_PLACE = "place"
+DB_TOURNAMENT_DATE = "date"
+DB_TOURNAMENT_TIME_CONTROL = "time_control"
+DB_TOURNAMENT_DESCRIPTION = "description"
+DB_TOURNAMENT_NUMBER_OF_ROUNDS = "number_of_rounds"
+
+DB_PLAYER_LAST_NAME = "last_name"
+DB_PLAYER_FIRST_NAME = "first_name"
+DB_PLAYER_DATE_OF_BIRTH = "date_of_birth"
+DB_PLAYER_GENDER = "gender"
+DB_PLAYER_RANK = "rank"

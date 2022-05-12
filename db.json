@@ -1,0 +1,70 @@
+{
+  "tournament": {
+    "1": {
+      "name": "R\u00e9gional 2022",
+      "place": "Strasbourg",
+      "date": "01/05/2022",
+      "time_control": 0,
+      "description": "Premier tournois de la saison",
+      "number_of_rounds": 4
+    }
+  },
+  "players": {
+    "1": {
+      "last_name": "MARTIN",
+      "first_name": "J\u00e9r\u00f4me",
+      "date_of_birth": "10/06/1995",
+      "gender": 0,
+      "rank": 988
+    },
+    "2": {
+      "last_name": "PEREZ",
+      "first_name": "Alexandre",
+      "date_of_birth": "01/08/1999",
+      "gender": 0,
+      "rank": 1113
+    },
+    "3": {
+      "last_name": "DUPUIS",
+      "first_name": "St\u00e9phanie",
+      "date_of_birth": "13/07/1982",
+      "gender": 1,
+      "rank": 1233
+    },
+    "4": {
+      "last_name": "ROBERT",
+      "first_name": "Mathilde",
+      "date_of_birth": "03/08/1996",
+      "gender": 1,
+      "rank": 1076
+    },
+    "5": {
+      "last_name": "KHAN",
+      "first_name": "Anil",
+      "date_of_birth": "25/02/2000",
+      "gender": 0,
+      "rank": 1091
+    },
+    "6": {
+      "last_name": "KLEIN",
+      "first_name": "Camille",
+      "date_of_birth": "03/04/1991",
+      "gender": 1,
+      "rank": 1139
+    },
+    "7": {
+      "last_name": "AYROUR",
+      "first_name": "Nadia",
+      "date_of_birth": "11/12/2001",
+      "gender": 1,
+      "rank": 1172
+    },
+    "8": {
+      "last_name": "THOMAS",
+      "first_name": "Dominique",
+      "date_of_birth": "11/03/1987",
+      "gender": 0,
+      "rank": 1244
+    }
+  }
+}

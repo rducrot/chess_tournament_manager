@@ -18,7 +18,7 @@ class SwissSystemController:
         """Sort a list of players by player score."""
         players.sort(key=lambda x: (x.score, x.rank), reverse=True)
 
-    def make_matches_list_first_round(self, players: List[Player]) -> List[tuple]:
+    def _make_matches_list_first_round(self, players: List[Player]) -> List[tuple]:
         """Define a list of matches for the first round."""
         matches = []
         half = len(players) // 2
@@ -32,7 +32,7 @@ class SwissSystemController:
 
         return matches
 
-    def make_matches_list(self, players: List[Player]) -> List[tuple]:
+    def _make_matches_list(self, players: List[Player]) -> List[tuple]:
         """Define a list of matches.
         Switch to the next player if a player was the opponent on the previous round."""
         matches = []
@@ -62,7 +62,7 @@ class SwissSystemController:
 
         return matches
 
-    def update_player_score(self, player: Player, matches: List[Match]):
+    def _update_player_score(self, player: Player, matches: List[Match]):
         """Update the total score of a player with the result of the match."""
         for match in matches:
             for result in match:
@@ -73,10 +73,10 @@ class SwissSystemController:
         """Implements the progression of a round following the swiss system."""
         if tournament_round == FIRST_ROUND_ID:
             self.sort_players_by_rank(players)
-            matches = self.make_matches_list_first_round(players)
+            matches = self._make_matches_list_first_round(players)
         else:
             self.sort_players_by_score(players)
-            matches = self.make_matches_list(players)
+            matches = self._make_matches_list(players)
 
         tournament_view.show_matches_list(matches)
 
@@ -84,4 +84,4 @@ class SwissSystemController:
             new_match = tournament_view.prompt_enter_match_score(match)
             tournament_round.matches.append(new_match)
         for player in players:
-            self.update_player_score(player, tournament_round.matches)
+            self._update_player_score(player, tournament_round.matches)

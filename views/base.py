@@ -66,8 +66,19 @@ class View:
         last_name = input("Nom du joueur : ")
         first_name = input("Prénom du joueur : ")
         date_of_birth = input("Date de naissance : ")
-        gender = input("Genre : ")
-        rank = input("Rang : ")
+        while True:
+            gender_prompt = input("Genre : ")
+            if gender_prompt == GENDER_M_PROMPT:
+                gender = GENDER_M
+                break
+            if gender_prompt == GENDER_W_PROMPT:
+                gender = GENDER_W
+                break
+        while True:
+            rank_prompt = input("Rang : ")
+            if rank_prompt is int:
+                rank = rank_prompt
+                break
 
         new_player = Player(last_name, first_name, date_of_birth, gender, rank)
         return new_player
