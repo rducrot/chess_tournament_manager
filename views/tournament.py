@@ -5,6 +5,7 @@ from constants import *
 from models.match import Match, Result
 from models.player import Player
 
+
 class TournamentView:
     def show_matches_list(self, matches):
         """Print the matches of the turn."""
@@ -23,14 +24,17 @@ class TournamentView:
             if first_player_prompt == WIN_PROMPT:
                 first_player_score = WIN_SCORE
                 second_player_score = LOSE_SCORE
+                print(f"{second_player} : Défaite")
                 break
             elif first_player_prompt == LOSE_PROMPT:
                 first_player_score = LOSE_SCORE
                 second_player_score = WIN_SCORE
+                print(f"{second_player} : Victoire")
                 break
             elif first_player_prompt == DRAW_PROMPT:
                 first_player_score = DRAW_SCORE
                 second_player_score = DRAW_SCORE
+                print(f"{second_player} : Match Nul")
                 break
 
         match = Match(Result(first_player, first_player_score), Result(second_player, second_player_score))
