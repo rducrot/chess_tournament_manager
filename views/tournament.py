@@ -9,8 +9,8 @@ from models.player import Player
 class TournamentView:
     def show_matches_list(self, matches):
         """Print the matches of the turn."""
-        print(f"Liste des matchs du tour :")
         print(SEPARATOR)
+        print(f"Liste des matchs du tour :")
         for match in matches:
             print(str(match))
         print(SEPARATOR)

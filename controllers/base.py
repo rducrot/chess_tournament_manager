@@ -19,6 +19,7 @@ class Controller:
         self.view = view
         self.tournament_view = tournament_view
         self.tournament_controller = tournament_controller
+        self.tournament = None
         self.db = db
 
     def _get_tournament(self):
@@ -91,7 +92,7 @@ class Controller:
         self._get_tournament()
         new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
         if new_tournament:
-            self.view.prompt_update_current_tournament()
+            self.tournament = self.view.prompt_update_current_tournament()
             self._save_new_tournament()
         self._init_rounds()
 

@@ -43,11 +43,17 @@ class View:
         description = input("Description : ")
         while True:
             number_of_rounds = input(f"Nombre de tours (Par défaut : {DEFAULT_NUMBER_OF_ROUNDS}) : ")
-            if number_of_rounds is int:
-                break
             if not number_of_rounds:
                 number_of_rounds = DEFAULT_NUMBER_OF_ROUNDS
                 break
+            try:
+                number_of_rounds = int(number_of_rounds)
+            except ValueError:
+                continue
+            number_of_rounds = int(number_of_rounds)
+            if type(number_of_rounds) == int:
+                break
+
         tournament = Tournament(name, place, date, time_control, description, number_of_rounds)
         print(tournament)
         return tournament
