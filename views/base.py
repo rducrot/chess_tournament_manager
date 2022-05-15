@@ -18,7 +18,7 @@ class View:
         print(SEPARATOR)
         print("Le tournois actuel est le suivant : ")
         print(str(tournament))
-        update_tournament = input("Souhaitez-vous initialiser un nouveau tournoi ? (O/N) ")
+        update_tournament = input(f"Souhaitez-vous initialiser un nouveau tournoi ? ({UPDATE_TOURNAMENT_PROMPT}/N) ")
         if update_tournament != UPDATE_TOURNAMENT_PROMPT:
             return False
         return True
@@ -64,7 +64,7 @@ class View:
         print("Les joueurs du tournois sont les suivants : ")
         for player in players:
             print(player)
-        update_players_list = input("Souhaitez-vous mettre à jour la liste des joueurs ? (O/N) ")
+        update_players_list = input(f"Souhaitez-vous mettre à jour la liste des joueurs ? ({UPDATE_PLAYERS_LIST_PROMPT}/N) ")
         if update_players_list != UPDATE_PLAYERS_LIST_PROMPT:
             return False
         return True
@@ -76,7 +76,7 @@ class View:
         first_name = input("Prénom du joueur : ")
         date_of_birth = input("Date de naissance : ")
         while True:
-            gender_prompt = input("Genre : (H/F)")
+            gender_prompt = input(f"Genre : ({GENDER_M}/{GENDER_W})")
             if gender_prompt == GENDER_M_PROMPT:
                 gender = GENDER_M
                 break
@@ -85,7 +85,12 @@ class View:
                 break
         while True:
             rank = input("Rang : ")
-            if rank is int:
+            try:
+                rank = int(rank)
+            except ValueError:
+                continue
+            rank = int(rank)
+            if type(rank) == int:
                 break
 
         new_player = Player(last_name, first_name, date_of_birth, gender, rank)

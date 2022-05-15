@@ -1,7 +1,7 @@
 """Define the rounds."""
-
 from itertools import count
 from typing import List
+
 from .match import Match
 
 
