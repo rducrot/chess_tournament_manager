@@ -62,7 +62,7 @@ class SwissSystemController:
 
         return matches
 
-    def _update_player_score(self, player: Player, matches: List[Match]):
+    def update_player_score(self, player: Player, matches: List[Match]):
         """Update the total score of a player with the result of the match."""
         for match in matches:
             for result in match:
@@ -84,4 +84,4 @@ class SwissSystemController:
             new_match = tournament_view.prompt_enter_match_score(match)
             tournament_round.matches.append(new_match)
         for player in players:
-            self._update_player_score(player, tournament_round.matches)
+            self.update_player_score(player, tournament_round.matches)

@@ -11,6 +11,7 @@
   },
   "players": {
     "1": {
+      "id": 0,
       "last_name": "MARTIN",
       "first_name": "J\u00e9r\u00f4me",
       "date_of_birth": "10/06/1995",
@@ -18,6 +19,7 @@
       "rank": 988
     },
     "2": {
+      "id": 1,
       "last_name": "PEREZ",
       "first_name": "Alexandre",
       "date_of_birth": "01/08/1999",
@@ -25,6 +27,7 @@
       "rank": 1113
     },
     "3": {
+      "id": 2,
       "last_name": "DUPUIS",
       "first_name": "St\u00e9phanie",
       "date_of_birth": "13/07/1982",
@@ -32,6 +35,7 @@
       "rank": 1233
     },
     "4": {
+      "id": 3,
       "last_name": "ROBERT",
       "first_name": "Mathilde",
       "date_of_birth": "03/08/1996",
@@ -39,6 +43,7 @@
       "rank": 1076
     },
     "5": {
+      "id": 4,
       "last_name": "KHAN",
       "first_name": "Anil",
       "date_of_birth": "25/02/2000",
@@ -46,6 +51,7 @@
       "rank": 1091
     },
     "6": {
+      "id": 5,
       "last_name": "KLEIN",
       "first_name": "Camille",
       "date_of_birth": "03/04/1991",
@@ -53,6 +59,7 @@
       "rank": 1139
     },
     "7": {
+      "id": 6,
       "last_name": "AYROUR",
       "first_name": "Nadia",
       "date_of_birth": "11/12/2001",
@@ -60,6 +67,7 @@
       "rank": 1172
     },
     "8": {
+      "id": 7,
       "last_name": "THOMAS",
       "first_name": "Dominique",
       "date_of_birth": "11/03/1987",

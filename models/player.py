@@ -28,3 +28,6 @@ class Player:
 
     def get_id(self):
         return self._id
+
+    def set_id(self, player_id):
+        self._id = player_id

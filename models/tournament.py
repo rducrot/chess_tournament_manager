@@ -25,3 +25,9 @@ class Tournament:
 
     def __repr__(self):
         return str(self)
+
+    def get_player(self, player_id: int) -> Player:
+        """Get a player from the players list by its id."""
+        for player in self.players:
+            if player.get_id() == player_id:
+                return player
