@@ -96,7 +96,8 @@ class Controller:
             serialized_round = {}
             match_id = 1
             for match in tournament_round.matches:
-                serialized_match = {match_id: {
+                serialized_match = {
+                    match_id: {
                         DB_MATCH_FIRST_PLAYER_ID: match.result_first_player.player.get_id(),
                         DB_MATCH_FIRST_PLAYER_SCORE: match.result_first_player.score,
                         DB_MATCH_SECOND_PLAYER_ID: match.result_second_player.player.get_id(),
@@ -134,7 +135,6 @@ class Controller:
 
     def initialize_tournament(self):
         """Ask to initialize a new tournament or use the existing one."""
-        self._get_tournament(self.db)
         new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
         if new_tournament:
             self.tournament = self.view.prompt_update_current_tournament()
@@ -143,7 +143,6 @@ class Controller:
 
     def initialize_players_list(self):
         """Ask to initialize a new players list or use the existing one."""
-        self._get_players(self.db)
         self.tournament_controller.sort_players_by_rank(self.tournament.players)
         update_players_list = self.view.prompt_ask_update_players_list(self.tournament.players)
         if update_players_list:
@@ -154,6 +153,7 @@ class Controller:
             self._save_players(self.db)
 
     def get_played_tournament(self, db):
+        """Get a tournament with its players, rounds and played matches from a database."""
         self._get_tournament(db)
         self._get_players(db)
         self._get_rounds(db)
@@ -162,17 +162,35 @@ class Controller:
 
     def run(self):
 
+        state = MENU_STATE
+        self._get_tournament(self.db)
+        self._get_players(self.db)
+        self._init_rounds()
+
         self.view.initial_message()
-        self.initialize_tournament()
-        self.initialize_players_list()
 
-        for tournament_round in self.tournament.rounds:
-            self.tournament_controller.make_a_round(tournament_round, self.tournament_view, self.tournament.players)
+        while True:
+            if state == MENU_STATE:
+                state = self.view.menu_message()
+                print(state)
 
-        self.tournament_controller.sort_players_by_score(self.tournament.players)
-        self.tournament_view.show_tournament_results(self.tournament.players)
+            if state == INIT_TOURNAMENT_STATE:
+                self.initialize_tournament()
+                self.initialize_players_list()
+                state = MENU_STATE
 
-        # See results from previous tournament
-        result_db = TinyDB("results.json")
-        self.get_played_tournament(result_db)
-        self.tournament_view.show_tournament_results(self.tournament.players)
+            if state == TOURNAMENT_STATE:
+                for tournament_round in self.tournament.rounds:
+                    self.tournament_controller.make_a_round(tournament_round, self.tournament_view, self.tournament.players)
+                self.tournament_controller.sort_players_by_score(self.tournament.players)
+                self.tournament_view.show_tournament_results(self.tournament.players)
+                state = MENU_STATE
+
+            if state == SHOW_REPORT_STATE:
+                result_db = TinyDB("results.json")
+                self.get_played_tournament(result_db)
+                self.tournament_view.show_tournament_results(self.tournament.players)
+                state = MENU_STATE
+
+            if state == QUIT_STATE:
+                break

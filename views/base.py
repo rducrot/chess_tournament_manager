@@ -13,6 +13,24 @@ class View:
         print(SEPARATOR)
         print(f"Bienvenue sur {APP_NAME}.")
 
+    def menu_message(self) -> int:
+        print(SEPARATOR)
+        print("Que souhaitez-vous faire ?")
+        print(f"Créer un nouveau tournois. ({INIT_TOURNAMENT_STATE})")
+        print(f"Entrer les scores d'un tournois en cours. ({TOURNAMENT_STATE})")
+        print(f"Afficher les scores d'un ancien tournois. ({SHOW_REPORT_STATE})")
+        print(f"Quitter l'application. ({QUIT_STATE})")
+        state = input('')
+        try:
+            state = int(state)
+        except ValueError:
+            return MENU_STATE
+        state = int(state)
+        if state in STATES:
+            return state
+        else:
+            return MENU_STATE
+
     def prompt_ask_new_tournament(self, tournament: Tournament) -> bool:
         """Ask for a new tournament."""
         print(SEPARATOR)
