@@ -11,6 +11,14 @@
   },
   "players": {
     "1": {
+      "id": 6,
+      "last_name": "AYROUR",
+      "first_name": "Nadia",
+      "date_of_birth": "11/12/2001",
+      "gender": 1,
+      "rank": 1172
+    },
+    "2": {
       "id": 5,
       "last_name": "KLEIN",
       "first_name": "Camille",
@@ -18,7 +26,7 @@
       "gender": 1,
       "rank": 1139
     },
-    "2": {
+    "3": {
       "id": 1,
       "last_name": "PEREZ",
       "first_name": "Alexandre",
@@ -26,7 +34,7 @@
       "gender": 0,
       "rank": 1113
     },
-    "3": {
+    "4": {
       "id": 7,
       "last_name": "THOMAS",
       "first_name": "Dominique",
@@ -34,21 +42,13 @@
       "gender": 0,
       "rank": 1244
     },
-    "4": {
+    "5": {
       "id": 0,
       "last_name": "MARTIN",
       "first_name": "J\u00e9r\u00f4me",
       "date_of_birth": "10/06/1995",
       "gender": 0,
       "rank": 988
-    },
-    "5": {
-      "id": 6,
-      "last_name": "AYROUR",
-      "first_name": "Nadia",
-      "date_of_birth": "11/12/2001",
-      "gender": 1,
-      "rank": 1172
     },
     "6": {
       "id": 2,
@@ -79,13 +79,13 @@
     "1": {
       "1": {
         "first_player_id": 7,
-        "first_player_score": 0,
+        "first_player_score": 1.0,
         "second_player_id": 2,
         "second_player_score": 0
       },
       "2": {
         "first_player_id": 6,
-        "first_player_score": 1.0,
+        "first_player_score": 0,
         "second_player_id": 5,
         "second_player_score": 1.0
       },
@@ -93,7 +93,7 @@
         "first_player_id": 1,
         "first_player_score": 0,
         "second_player_id": 4,
-        "second_player_score": 0
+        "second_player_score": 1.0
       },
       "4": {
         "first_player_id": 3,
@@ -105,7 +105,7 @@
     "2": {
       "1": {
         "first_player_id": 7,
-        "first_player_score": 0,
+        "first_player_score": 1.0,
         "second_player_id": 5,
         "second_player_score": 0
       },
@@ -119,19 +119,19 @@
         "first_player_id": 0,
         "first_player_score": 0,
         "second_player_id": 2,
-        "second_player_score": 0
+        "second_player_score": 1.0
       },
       "4": {
         "first_player_id": 6,
         "first_player_score": 0,
         "second_player_id": 4,
-        "second_player_score": 0
+        "second_player_score": 1.0
       }
     },
     "3": {
       "1": {
         "first_player_id": 7,
-        "first_player_score": 1.0,
+        "first_player_score": 0,
         "second_player_id": 1,
         "second_player_score": 1.0
       },
@@ -143,13 +143,13 @@
       },
       "3": {
         "first_player_id": 5,
-        "first_player_score": 0,
+        "first_player_score": 1.0,
         "second_player_id": 3,
         "second_player_score": 0
       },
       "4": {
         "first_player_id": 2,
-        "first_player_score": 0,
+        "first_player_score": 1.0,
         "second_player_id": 4,
         "second_player_score": 0
       }
@@ -159,7 +159,7 @@
         "first_player_id": 1,
         "first_player_score": 1.0,
         "second_player_id": 5,
-        "second_player_score": 1.0
+        "second_player_score": 0
       },
       "2": {
         "first_player_id": 7,
@@ -177,7 +177,7 @@
         "first_player_id": 3,
         "first_player_score": 0,
         "second_player_id": 4,
-        "second_player_score": 0
+        "second_player_score": 1.0
       }
     }
   }

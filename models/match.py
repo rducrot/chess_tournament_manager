@@ -1,7 +1,7 @@
 """Define the matches."""
 from typing import NamedTuple
 
-from constants import WIN_SCORE, LOSE_SCORE, DRAW_SCORE
+from constants import *
 from models.player import Player
 
 
@@ -33,3 +33,15 @@ class Match(NamedTuple):
 
     def __repr__(self):
         return str(self)
+
+    def serialize(self, match_id):
+        """Return a serialized version of the match."""
+        serialized_match = {
+            match_id: {
+                DB_MATCH_FIRST_PLAYER_ID: self.result_first_player.player.get_id(),
+                DB_MATCH_FIRST_PLAYER_SCORE: self.result_first_player.score,
+                DB_MATCH_SECOND_PLAYER_ID: self.result_second_player.player.get_id(),
+                DB_MATCH_SECOND_PLAYER_SCORE: self.result_second_player.score,
+            }
+        }
+        return serialized_match

@@ -1,6 +1,10 @@
 """Define the players."""
 from itertools import count
 
+from tinydb import TinyDB
+
+from constants import *
+
 
 class Player:
     """Player class."""
@@ -31,3 +35,16 @@ class Player:
 
     def set_id(self, player_id):
         self._id = player_id
+
+    def save(self, db: TinyDB):
+        """Save the player to the database."""
+        players_table = db.table(DB_TABLE_PLAYERS)
+        serialized_player = {
+            DB_PLAYER_ID: self.get_id(),
+            DB_PLAYER_LAST_NAME: self.last_name,
+            DB_PLAYER_FIRST_NAME: self.first_name,
+            DB_PLAYER_DATE_OF_BIRTH: self.date_of_birth,
+            DB_PLAYER_GENDER: self.gender,
+            DB_PLAYER_RANK: self.rank
+        }
+        players_table.insert(serialized_player)
