@@ -16,17 +16,24 @@ class Controller:
     def __init__(self, view: View,
                  tournament_view: TournamentView,
                  tournament_controller: SwissSystemController,
-                 db: TinyDB):
+                 db: TinyDB,
+                 report_db: TinyDB):
         self.view = view
         self.tournament_view = tournament_view
         self.tournament_controller = tournament_controller
         self.tournament = None
         self.db = db
+        self.report_db = report_db
 
-    def _load_tournament(self, db):
+    def _load_tournament(self, db) -> bool:
         """Load the tournament from the database."""
         tournament_table = db.table(DB_TABLE_TOURNAMENT)
-        serialized_tournament = tournament_table.all()[0]
+        try:
+            serialized_tournament = tournament_table.all()[0]
+        except IndexError:
+            return False
+        except AttributeError:
+            return False
 
         tournament = Tournament(
             name=serialized_tournament[DB_TOURNAMENT_NAME],
@@ -37,6 +44,8 @@ class Controller:
             number_of_rounds=serialized_tournament[DB_TOURNAMENT_NUMBER_OF_ROUNDS])
 
         self.tournament = tournament
+        self.tournament.init_rounds()
+        return True
 
     def _load_players(self, db):
         """Load the players from the database."""
@@ -75,6 +84,7 @@ class Controller:
     def _calculate_players_scores(self):
         """Calculate the players' scores from the played matches."""
         for player in self.tournament.players:
+            player.reset_score()
             for tournament_round in self.tournament.rounds:
                 self.tournament_controller.update_player_score(player, tournament_round.matches)
 
@@ -86,58 +96,82 @@ class Controller:
         self._calculate_players_scores()
         self.tournament_controller.sort_players_by_score(self.tournament.players)
 
-    def initialize_tournament(self):
+    def manage_tournament_information(self):
         """Ask to initialize a new tournament or use the existing one."""
-        new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
+        if self.tournament is None:
+            self.view.no_tournament_message()
+            new_tournament = True
+        else:
+            new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
         if new_tournament:
             self.tournament = self.view.prompt_update_current_tournament()
             self.tournament.save(self.db)
         self.tournament.init_rounds()
 
-    def initialize_players_list(self):
+    def manage_players_list(self):
         """Ask to initialize a new players list or use the existing one."""
-        self.tournament_controller.sort_players_by_rank(self.tournament.players)
-        update_players_list = self.view.prompt_ask_update_players_list(self.tournament.players)
+        if self.tournament.empty_player_list():
+            self.view.empty_players_list_message()
+            update_players_list = True
+        else:
+            self.tournament_controller.sort_players_by_rank(self.tournament.players)
+            update_players_list = self.view.prompt_ask_update_players_list(self.tournament.players)
         if update_players_list:
-            self.tournament.players = []
+            self.tournament.reset_players_list()
             while len(self.tournament.players) < NUMBER_OF_PLAYERS:
                 new_player = self.view.prompt_add_a_player()
                 self.tournament.players.append(new_player)
             self.tournament.save_players(self.db)
 
-    def run(self):
+    def run_tournament(self):
+        """Run the tournament.
+        Ask to write the results in a report."""
+        for tournament_round in self.tournament.rounds:
+            self.tournament_controller.make_a_round(tournament_round,
+                                                    self.tournament_view,
+                                                    self.tournament.players)
+        self.tournament_controller.sort_players_by_score(self.tournament.players)
+        self.tournament_view.show_tournament_results(self.tournament.players)
 
+        save_report = self.view.prompt_ask_save_report()
+        if save_report:
+            self.tournament.save(self.report_db)
+            self.view.saved_report_message(REPORT_DB_NAME)
+
+    def run(self):
         state = MENU_STATE
         running = True
 
-        self._load_tournament(self.db)
-        self._load_players(self.db)
-        self.tournament.init_rounds()
-
         self.view.initial_message()
+
+        tournament_loaded = self._load_tournament(self.db)
+        if tournament_loaded:
+            self._load_players(self.db)
 
         while running:
             if state == MENU_STATE:
                 state = self.view.menu_message()
                 print(state)
 
-            if state == INIT_TOURNAMENT_STATE:
-                self.initialize_tournament()
-                self.initialize_players_list()
+            if state == MANAGE_TOURNAMENT_STATE:
+                self.manage_tournament_information()
                 state = MENU_STATE
 
-            if state == TOURNAMENT_STATE:
-                for tournament_round in self.tournament.rounds:
-                    self.tournament_controller.make_a_round(tournament_round,
-                                                            self.tournament_view,
-                                                            self.tournament.players)
-                self.tournament_controller.sort_players_by_score(self.tournament.players)
-                self.tournament_view.show_tournament_results(self.tournament.players)
+            if state == MANAGE_PLAYERS_LIST_STATE:
+                self.manage_players_list()
                 state = MENU_STATE
+
+            if state == RUN_TOURNAMENT_STATE:
+                if self.tournament is None:
+                    state = MANAGE_TOURNAMENT_STATE
+                elif self.tournament.empty_player_list():
+                    state = MANAGE_PLAYERS_LIST_STATE
+                else:
+                    self.run_tournament()
+                    state = MENU_STATE
 
             if state == SHOW_REPORT_STATE:
-                result_db = TinyDB("results.json")
-                self.load_played_tournament(result_db)
+                self.load_played_tournament(self.report_db)
                 self.tournament_view.show_tournament_results(self.tournament.players)
                 state = MENU_STATE
 

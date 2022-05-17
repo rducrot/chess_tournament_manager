@@ -36,6 +36,9 @@ class Player:
     def set_id(self, player_id):
         self._id = player_id
 
+    def reset_score(self):
+        self.score = 0
+
     def save(self, db: TinyDB):
         """Save the player to the database."""
         players_table = db.table(DB_TABLE_PLAYERS)

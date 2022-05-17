@@ -34,6 +34,12 @@ class Tournament:
             if player.get_id() == player_id:
                 return player
 
+    def reset_players_list(self):
+        self.players = []
+
+    def empty_player_list(self):
+        return len(self.players) == 0
+
     def init_rounds(self):
         """Initialize the rounds of the tournament using number_of_rounds."""
         round_number = 1

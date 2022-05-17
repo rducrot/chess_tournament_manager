@@ -16,9 +16,10 @@ class View:
     def menu_message(self) -> int:
         print(SEPARATOR)
         print("Que souhaitez-vous faire ?")
-        print(f"Créer un nouveau tournois. ({INIT_TOURNAMENT_STATE})")
-        print(f"Entrer les scores d'un tournois en cours. ({TOURNAMENT_STATE})")
-        print(f"Afficher les scores d'un ancien tournois. ({SHOW_REPORT_STATE})")
+        print(f"Gérer les informations du tournois. ({MANAGE_TOURNAMENT_STATE})")
+        print(f"Gérer la liste des joueurs. ({MANAGE_PLAYERS_LIST_STATE})")
+        print(f"Entrer les scores du tournois en cours. ({RUN_TOURNAMENT_STATE})")
+        print(f"Afficher le rapport d'un tournois passé. ({SHOW_REPORT_STATE})")
         print(f"Quitter l'application. ({QUIT_STATE})")
         state = input('')
         try:
@@ -30,6 +31,10 @@ class View:
             return state
         else:
             return MENU_STATE
+
+    def no_tournament_message(self):
+        """Message if no tournament found."""
+        print("Pas de tournois en cours. Veuillez entrer les informations du tournois : ")
 
     def prompt_ask_new_tournament(self, tournament: Tournament) -> bool:
         """Ask for a new tournament."""
@@ -76,6 +81,10 @@ class View:
         print(tournament)
         return tournament
 
+    def empty_players_list_message(self):
+        """Message if there is no players."""
+        print("Aucun joueur trouvé. Veuillez renseigner les informations des joueurs : ")
+
     def prompt_ask_update_players_list(self, players: List[Player]) -> bool:
         """Ask to update the current players list."""
         print(SEPARATOR)
@@ -94,7 +103,7 @@ class View:
         first_name = input("Prénom du joueur : ")
         date_of_birth = input("Date de naissance : ")
         while True:
-            gender_prompt = input(f"Genre : ({GENDER_M}/{GENDER_W})")
+            gender_prompt = input(f"Genre : ({GENDER_M_PROMPT}/{GENDER_W_PROMPT})")
             if gender_prompt == GENDER_M_PROMPT:
                 gender = GENDER_M
                 break
@@ -113,3 +122,13 @@ class View:
 
         new_player = Player(last_name, first_name, date_of_birth, gender, rank)
         return new_player
+
+    def prompt_ask_save_report(self):
+        print(SEPARATOR)
+        save_report = input("Souhaitez-vous enregistrer un rapport de tournois ? (O/N) ")
+        if save_report != SAVE_RESULTS_PROMPT:
+            return False
+        return True
+
+    def saved_report_message(self, db_name):
+        print(f"Rapport enregistré dans {db_name}")
