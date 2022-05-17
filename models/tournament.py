@@ -37,7 +37,7 @@ class Tournament:
     def reset_players_list(self):
         self.players = []
 
-    def empty_player_list(self):
+    def empty_players_list(self):
         return len(self.players) == 0
 
     def init_rounds(self):

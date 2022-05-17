@@ -1,4 +1,5 @@
 """Define the rounds."""
+from datetime import datetime
 from itertools import count
 from typing import List
 
@@ -17,6 +18,8 @@ class Round:
         self._id = next(self.id_iter)
         self.name = f"Round {round_number}"
         self.matches: List[Match] = []
+        self.beginning_time = None
+        self.ending_time = None
 
     def __str__(self):
         return self.name
@@ -26,6 +29,12 @@ class Round:
 
     def __eq__(self, other):
         return self._id == other
+
+    def set_beginning_time(self):
+        self.beginning_time = datetime.now()
+
+    def set_ending_time(self):
+        self.ending_time = datetime.now()
 
     def save(self, db: TinyDB):
         """Save the round to the database."""

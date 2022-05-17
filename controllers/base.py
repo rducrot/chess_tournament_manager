@@ -1,4 +1,6 @@
 """Define the main controller."""
+from datetime import datetime
+
 from tinydb import TinyDB
 
 from constants import *
@@ -127,12 +129,13 @@ class Controller:
         """Run the tournament.
         Ask to write the results in a report."""
         for tournament_round in self.tournament.rounds:
+            tournament_round.set_beginning_time()
             self.tournament_controller.make_a_round(tournament_round,
                                                     self.tournament_view,
                                                     self.tournament.players)
+            tournament_round.set_ending_time()
         self.tournament_controller.sort_players_by_score(self.tournament.players)
         self.tournament_view.show_tournament_results(self.tournament.players)
-
         save_report = self.view.prompt_ask_save_report()
         if save_report:
             self.tournament.save(self.report_db)
@@ -164,8 +167,8 @@ class Controller:
             if state == RUN_TOURNAMENT_STATE:
                 if self.tournament is None:
                     state = MANAGE_TOURNAMENT_STATE
-                elif self.tournament.empty_player_list():
-                    state = MANAGE_PLAYERS_LIST_STATE
+                #elif self.tournament.empty_player_list():
+                #    state = MANAGE_PLAYERS_LIST_STATE
                 else:
                     self.run_tournament()
                     state = MENU_STATE
