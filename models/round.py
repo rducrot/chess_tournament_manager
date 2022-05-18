@@ -1,5 +1,4 @@
 """Define the rounds."""
-from datetime import datetime
 from itertools import count
 from typing import List
 
@@ -30,19 +29,21 @@ class Round:
     def __eq__(self, other):
         return self._id == other
 
-    def set_beginning_time(self):
-        self.beginning_time = datetime.now()
+    def set_beginning_time(self, time):
+        self.beginning_time = time
 
-    def set_ending_time(self):
-        self.ending_time = datetime.now()
+    def set_ending_time(self, time):
+        self.ending_time = time
 
     def save(self, db: TinyDB):
         """Save the round to the database."""
         rounds_table = db.table(DB_TABLE_ROUNDS)
-        serialized_round = {}
+        serialized_round = {DB_ROUND_BEGINNING_TIME: self.beginning_time,
+                            DB_ROUND_ENDING_TIME: self.ending_time,
+                            DB_ROUND_MATCHES_LIST: {}}
         match_id = 1
         for match in self.matches:
             serialized_match = match.serialize(match_id)
-            serialized_round.update(serialized_match)
+            serialized_round[DB_ROUND_MATCHES_LIST].update(serialized_match)
             match_id += 1
         rounds_table.insert(serialized_round)

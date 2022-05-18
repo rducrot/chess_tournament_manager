@@ -71,6 +71,10 @@ DB_PLAYER_DATE_OF_BIRTH = "date_of_birth"
 DB_PLAYER_GENDER = "gender"
 DB_PLAYER_RANK = "rank"
 
+DB_ROUND_BEGINNING_TIME = "beginning_time"
+DB_ROUND_ENDING_TIME = "ending_time"
+DB_ROUND_MATCHES_LIST = "matches"
+
 DB_MATCH_FIRST_PLAYER_ID = "first_player_id"
 DB_MATCH_FIRST_PLAYER_SCORE = "first_player_score"
 DB_MATCH_SECOND_PLAYER_ID = "second_player_id"

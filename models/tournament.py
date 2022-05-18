@@ -37,8 +37,12 @@ class Tournament:
     def reset_players_list(self):
         self.players = []
 
-    def empty_players_list(self):
+    def players_list_is_empty(self):
         return len(self.players) == 0
+
+    def reset_players_scores(self):
+        for player in self.players:
+            player.reset_score()
 
     def init_rounds(self):
         """Initialize the rounds of the tournament using number_of_rounds."""
@@ -47,8 +51,8 @@ class Tournament:
             self.rounds.append(Round(round_number))
             round_number += 1
 
-    def save(self, db: TinyDB):
-        """Save the tournament to the database."""
+    def save_basic_information(self, db: TinyDB):
+        """Save basic information about the tournament to the database."""
         tournament_table = db.table(DB_TABLE_TOURNAMENT)
         tournament_table.truncate()
         serialized_tournament = {
@@ -74,3 +78,9 @@ class Tournament:
         rounds_table.truncate()
         for tournament_round in self.rounds:
             tournament_round.save(db)
+
+    def save(self, db: TinyDB):
+        """Save the whole tournament including players and played rounds."""
+        self.save_basic_information(db)
+        self.save_players(db)
+        self.save_rounds(db)

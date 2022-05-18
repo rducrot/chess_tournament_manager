@@ -73,13 +73,21 @@ class Controller:
         round_number = 1
         for serialized_round in serialized_rounds:
             tournament_round = Round(round_number)
-            for serialized_match in serialized_round.values():
+            tournament_round.set_beginning_time(serialized_round[DB_ROUND_BEGINNING_TIME])
+            tournament_round.set_ending_time(serialized_round[DB_ROUND_ENDING_TIME])
+
+            for serialized_match in serialized_round[DB_ROUND_MATCHES_LIST].values():
+                print(serialized_match)
+                print(f"first player id {serialized_match[DB_MATCH_FIRST_PLAYER_ID]}")
                 first_player = self.tournament.get_player(serialized_match[DB_MATCH_FIRST_PLAYER_ID])
                 second_player = self.tournament.get_player(serialized_match[DB_MATCH_SECOND_PLAYER_ID])
                 match = Match(Result(first_player, serialized_match[DB_MATCH_FIRST_PLAYER_SCORE]),
                               Result(second_player, serialized_match[DB_MATCH_SECOND_PLAYER_SCORE]))
                 tournament_round.matches.append(match)
                 round_number += 1
+
+            tournament_round.set_beginning_time(serialized_round[DB_ROUND_BEGINNING_TIME])
+            tournament_round.set_ending_time(serialized_round[DB_ROUND_ENDING_TIME])
 
             self.tournament.rounds.append(tournament_round)
 
@@ -107,12 +115,12 @@ class Controller:
             new_tournament = self.view.prompt_ask_new_tournament(self.tournament)
         if new_tournament:
             self.tournament = self.view.prompt_update_current_tournament()
-            self.tournament.save(self.db)
+            self.tournament.save_basic_information(self.db)
         self.tournament.init_rounds()
 
     def manage_players_list(self):
         """Ask to initialize a new players list or use the existing one."""
-        if self.tournament.empty_player_list():
+        if self.tournament.players_list_is_empty():
             self.view.empty_players_list_message()
             update_players_list = True
         else:
@@ -128,14 +136,16 @@ class Controller:
     def run_tournament(self):
         """Run the tournament.
         Ask to write the results in a report."""
+        self.tournament.reset_players_scores()
         for tournament_round in self.tournament.rounds:
-            tournament_round.set_beginning_time()
+            tournament_round.set_beginning_time(str(datetime.now()))
             self.tournament_controller.make_a_round(tournament_round,
                                                     self.tournament_view,
                                                     self.tournament.players)
-            tournament_round.set_ending_time()
+            tournament_round.set_ending_time(str(datetime.now()))
         self.tournament_controller.sort_players_by_score(self.tournament.players)
         self.tournament_view.show_tournament_results(self.tournament.players)
+        
         save_report = self.view.prompt_ask_save_report()
         if save_report:
             self.tournament.save(self.report_db)
@@ -167,8 +177,8 @@ class Controller:
             if state == RUN_TOURNAMENT_STATE:
                 if self.tournament is None:
                     state = MANAGE_TOURNAMENT_STATE
-                #elif self.tournament.empty_player_list():
-                #    state = MANAGE_PLAYERS_LIST_STATE
+                elif self.tournament.players_list_is_empty():
+                    state = MANAGE_PLAYERS_LIST_STATE
                 else:
                     self.run_tournament()
                     state = MENU_STATE

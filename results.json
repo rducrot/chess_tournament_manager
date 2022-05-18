@@ -11,22 +11,14 @@
   },
   "players": {
     "1": {
-      "id": 6,
-      "last_name": "AYROUR",
-      "first_name": "Nadia",
-      "date_of_birth": "11/12/2001",
+      "id": 2,
+      "last_name": "DUPUIS",
+      "first_name": "St\u00e9phanie",
+      "date_of_birth": "13/07/1982",
       "gender": 1,
-      "rank": 1172
+      "rank": 1233
     },
     "2": {
-      "id": 5,
-      "last_name": "KLEIN",
-      "first_name": "Camille",
-      "date_of_birth": "03/04/1991",
-      "gender": 1,
-      "rank": 1139
-    },
-    "3": {
       "id": 1,
       "last_name": "PEREZ",
       "first_name": "Alexandre",
@@ -34,13 +26,21 @@
       "gender": 0,
       "rank": 1113
     },
-    "4": {
-      "id": 7,
-      "last_name": "THOMAS",
-      "first_name": "Dominique",
-      "date_of_birth": "11/03/1987",
+    "3": {
+      "id": 4,
+      "last_name": "KHAN",
+      "first_name": "Anil",
+      "date_of_birth": "25/02/2000",
       "gender": 0,
-      "rank": 1244
+      "rank": 1091
+    },
+    "4": {
+      "id": 6,
+      "last_name": "AYROUR",
+      "first_name": "Nadia",
+      "date_of_birth": "11/12/2001",
+      "gender": 1,
+      "rank": 1172
     },
     "5": {
       "id": 0,
@@ -51,133 +51,149 @@
       "rank": 988
     },
     "6": {
-      "id": 2,
-      "last_name": "DUPUIS",
-      "first_name": "St\u00e9phanie",
-      "date_of_birth": "13/07/1982",
-      "gender": 1,
-      "rank": 1233
+      "id": 7,
+      "last_name": "THOMAS",
+      "first_name": "Dominique",
+      "date_of_birth": "11/03/1987",
+      "gender": 0,
+      "rank": 1244
     },
     "7": {
+      "id": 5,
+      "last_name": "KLEIN",
+      "first_name": "Camille",
+      "date_of_birth": "03/04/1991",
+      "gender": 1,
+      "rank": 1139
+    },
+    "8": {
       "id": 3,
       "last_name": "ROBERT",
       "first_name": "Mathilde",
       "date_of_birth": "03/08/1996",
       "gender": 1,
       "rank": 1076
-    },
-    "8": {
-      "id": 4,
-      "last_name": "KHAN",
-      "first_name": "Anil",
-      "date_of_birth": "25/02/2000",
-      "gender": 0,
-      "rank": 1091
     }
   },
   "rounds": {
     "1": {
-      "1": {
-        "first_player_id": 7,
-        "first_player_score": 1.0,
-        "second_player_id": 2,
-        "second_player_score": 0
-      },
-      "2": {
-        "first_player_id": 6,
-        "first_player_score": 0,
-        "second_player_id": 5,
-        "second_player_score": 1.0
-      },
-      "3": {
-        "first_player_id": 1,
-        "first_player_score": 0,
-        "second_player_id": 4,
-        "second_player_score": 1.0
-      },
-      "4": {
-        "first_player_id": 3,
-        "first_player_score": 0.5,
-        "second_player_id": 0,
-        "second_player_score": 0.5
+      "beginning_time": "2022-05-18 10:11:25.029466",
+      "ending_time": "2022-05-18 10:11:27.445850",
+      "matches": {
+        "1": {
+          "first_player_id": 7,
+          "first_player_score": 0,
+          "second_player_id": 1,
+          "second_player_score": 1.0
+        },
+        "2": {
+          "first_player_id": 2,
+          "first_player_score": 1.0,
+          "second_player_id": 4,
+          "second_player_score": 0
+        },
+        "3": {
+          "first_player_id": 6,
+          "first_player_score": 1.0,
+          "second_player_id": 3,
+          "second_player_score": 0
+        },
+        "4": {
+          "first_player_id": 5,
+          "first_player_score": 0.5,
+          "second_player_id": 0,
+          "second_player_score": 0.5
+        }
       }
     },
     "2": {
-      "1": {
-        "first_player_id": 7,
-        "first_player_score": 1.0,
-        "second_player_id": 5,
-        "second_player_score": 0
-      },
-      "2": {
-        "first_player_id": 1,
-        "first_player_score": 0,
-        "second_player_id": 3,
-        "second_player_score": 0
-      },
-      "3": {
-        "first_player_id": 0,
-        "first_player_score": 0,
-        "second_player_id": 2,
-        "second_player_score": 1.0
-      },
-      "4": {
-        "first_player_id": 6,
-        "first_player_score": 0,
-        "second_player_id": 4,
-        "second_player_score": 1.0
+      "beginning_time": "2022-05-18 10:11:27.445875",
+      "ending_time": "2022-05-18 10:11:29.285148",
+      "matches": {
+        "1": {
+          "first_player_id": 2,
+          "first_player_score": 1.0,
+          "second_player_id": 6,
+          "second_player_score": 0
+        },
+        "2": {
+          "first_player_id": 1,
+          "first_player_score": 1.0,
+          "second_player_id": 5,
+          "second_player_score": 0
+        },
+        "3": {
+          "first_player_id": 0,
+          "first_player_score": 0,
+          "second_player_id": 7,
+          "second_player_score": 1.0
+        },
+        "4": {
+          "first_player_id": 4,
+          "first_player_score": 1.0,
+          "second_player_id": 3,
+          "second_player_score": 0
+        }
       }
     },
     "3": {
-      "1": {
-        "first_player_id": 7,
-        "first_player_score": 0,
-        "second_player_id": 1,
-        "second_player_score": 1.0
-      },
-      "2": {
-        "first_player_id": 0,
-        "first_player_score": 0.5,
-        "second_player_id": 6,
-        "second_player_score": 0.5
-      },
-      "3": {
-        "first_player_id": 5,
-        "first_player_score": 1.0,
-        "second_player_id": 3,
-        "second_player_score": 0
-      },
-      "4": {
-        "first_player_id": 2,
-        "first_player_score": 1.0,
-        "second_player_id": 4,
-        "second_player_score": 0
+      "beginning_time": "2022-05-18 10:11:29.285179",
+      "ending_time": "2022-05-18 10:11:34.069251",
+      "matches": {
+        "1": {
+          "first_player_id": 2,
+          "first_player_score": 1.0,
+          "second_player_id": 1,
+          "second_player_score": 0
+        },
+        "2": {
+          "first_player_id": 7,
+          "first_player_score": 0.5,
+          "second_player_id": 6,
+          "second_player_score": 0.5
+        },
+        "3": {
+          "first_player_id": 4,
+          "first_player_score": 1.0,
+          "second_player_id": 5,
+          "second_player_score": 0
+        },
+        "4": {
+          "first_player_id": 0,
+          "first_player_score": 1.0,
+          "second_player_id": 3,
+          "second_player_score": 0
+        }
       }
     },
     "4": {
-      "1": {
-        "first_player_id": 1,
-        "first_player_score": 1.0,
-        "second_player_id": 5,
-        "second_player_score": 0
-      },
-      "2": {
-        "first_player_id": 7,
-        "first_player_score": 0.5,
-        "second_player_id": 0,
-        "second_player_score": 0.5
-      },
-      "3": {
-        "first_player_id": 6,
-        "first_player_score": 0.5,
-        "second_player_id": 2,
-        "second_player_score": 0.5
-      },
-      "4": {
-        "first_player_id": 3,
-        "first_player_score": 0,
-        "second_player_id": 4,
-        "second_player_score": 1.0
+      "beginning_time": "2022-05-18 10:11:34.069280",
+      "ending_time": "2022-05-18 10:11:37.653159",
+      "matches": {
+        "1": {
+          "first_player_id": 2,
+          "first_player_score": 0,
+          "second_player_id": 4,
+          "second_player_score": 1.0
+        },
+        "2": {
+          "first_player_id": 1,
+          "first_player_score": 1.0,
+          "second_player_id": 7,
+          "second_player_score": 0
+        },
+        "3": {
+          "first_player_id": 6,
+          "first_player_score": 0.5,
+          "second_player_id": 0,
+          "second_player_score": 0.5
+        },
+        "4": {
+          "first_player_id": 5,
+          "first_player_score": 1.0,
+          "second_player_id": 3,
+          "second_player_score": 0
+        }
       }
     }
   }
