@@ -44,12 +44,14 @@ class ReportView:
     def show_rounds(self, tournament: Tournament):
         """Show the rounds of the tournament."""
         print(SEPARATOR)
+        print(tournament)
         for tournament_round in tournament.rounds:
-            print(tournament_round)
+            print(f"{tournament_round.name} du {tournament_round.beginning_time} au {tournament_round.ending_time}.")
 
     def show_matches(self, tournament: Tournament):
         """Show the results of every match of the tournament."""
         print(SEPARATOR)
+        print(tournament)
         for tournament_round in tournament.rounds:
             print(f"Résultats du {tournament_round.name} :")
             for match in tournament_round.matches:
