@@ -12,13 +12,15 @@ class Tournament:
     """Tournament class."""
 
     def __init__(self, name, place, date, time_control,
-                 description, number_of_rounds=DEFAULT_NUMBER_OF_ROUNDS):
+                 description, number_of_rounds=DEFAULT_NUMBER_OF_ROUNDS,
+                 played_rounds=BEGINNING_PLAYED_ROUNDS_NUMBER):
         self.name = name
         self.place = place
         self.date = date
         self.time_control = time_control
         self.description = description
         self.number_of_rounds = number_of_rounds
+        self.played_rounds = played_rounds
         self.rounds: List[Round] = []
         self.players: List[Player] = []
 
@@ -35,12 +37,15 @@ class Tournament:
                 return player
 
     def reset_players_list(self):
+        """Reset the players list."""
         self.players = []
 
     def players_list_is_empty(self):
+        """Return a boolean to know if the players list is empty."""
         return len(self.players) == 0
 
     def reset_players_scores(self):
+        """Reset the score of every player."""
         for player in self.players:
             player.reset_score()
 
@@ -50,6 +55,10 @@ class Tournament:
         while len(self.rounds) < self.number_of_rounds:
             self.rounds.append(Round(round_number))
             round_number += 1
+
+    def all_rounds_played(self):
+        """Return a boolean to know if all the rounds are played."""
+        return self.played_rounds >= self.number_of_rounds
 
     def save_basic_information(self, db: TinyDB):
         """Save basic information about the tournament to the database."""
@@ -61,7 +70,8 @@ class Tournament:
             DB_TOURNAMENT_DATE: self.date,
             DB_TOURNAMENT_TIME_CONTROL: self.time_control,
             DB_TOURNAMENT_DESCRIPTION: self.description,
-            DB_TOURNAMENT_NUMBER_OF_ROUNDS: self.number_of_rounds
+            DB_TOURNAMENT_NUMBER_OF_ROUNDS: self.number_of_rounds,
+            DB_TOURNAMENT_PLAYED_ROUNDS: self.played_rounds
         }
         tournament_table.insert(serialized_tournament)
 

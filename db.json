@@ -6,7 +6,8 @@
       "date": "01/05/2022",
       "time_control": 0,
       "description": "Premier tournois de la saison",
-      "number_of_rounds": 4
+      "number_of_rounds": 4,
+      "played_rounds": 0
     }
   },
   "players": {

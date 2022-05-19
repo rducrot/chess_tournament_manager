@@ -43,10 +43,14 @@ class Controller:
             date=serialized_tournament[DB_TOURNAMENT_DATE],
             time_control=serialized_tournament[DB_TOURNAMENT_TIME_CONTROL],
             description=serialized_tournament[DB_TOURNAMENT_DESCRIPTION],
-            number_of_rounds=serialized_tournament[DB_TOURNAMENT_NUMBER_OF_ROUNDS])
+            number_of_rounds=serialized_tournament[DB_TOURNAMENT_NUMBER_OF_ROUNDS],
+            played_rounds=serialized_tournament[DB_TOURNAMENT_PLAYED_ROUNDS])
+
+        if tournament.played_rounds == BEGINNING_PLAYED_ROUNDS_NUMBER:
+            tournament.init_rounds()
 
         self.tournament = tournament
-        self.tournament.init_rounds()
+
         return True
 
     def _load_players(self, db):
@@ -70,21 +74,17 @@ class Controller:
         rounds_table = db.table(DB_TABLE_ROUNDS)
         serialized_rounds = rounds_table.all()
 
-        round_number = 1
         for serialized_round in serialized_rounds:
-            tournament_round = Round(round_number)
+            tournament_round = Round(serialized_round[DB_ROUND_ID])
             tournament_round.set_beginning_time(serialized_round[DB_ROUND_BEGINNING_TIME])
             tournament_round.set_ending_time(serialized_round[DB_ROUND_ENDING_TIME])
 
             for serialized_match in serialized_round[DB_ROUND_MATCHES_LIST].values():
-                print(serialized_match)
-                print(f"first player id {serialized_match[DB_MATCH_FIRST_PLAYER_ID]}")
                 first_player = self.tournament.get_player(serialized_match[DB_MATCH_FIRST_PLAYER_ID])
                 second_player = self.tournament.get_player(serialized_match[DB_MATCH_SECOND_PLAYER_ID])
                 match = Match(Result(first_player, serialized_match[DB_MATCH_FIRST_PLAYER_SCORE]),
                               Result(second_player, serialized_match[DB_MATCH_SECOND_PLAYER_SCORE]))
                 tournament_round.matches.append(match)
-                round_number += 1
 
             tournament_round.set_beginning_time(serialized_round[DB_ROUND_BEGINNING_TIME])
             tournament_round.set_ending_time(serialized_round[DB_ROUND_ENDING_TIME])
@@ -133,23 +133,39 @@ class Controller:
                 self.tournament.players.append(new_player)
             self.tournament.save_players(self.db)
 
+    def save_report(self, db):
+        save_report = self.view.prompt_ask_save_report()
+        if save_report:
+            self.tournament.save(db)
+            self.view.saved_report_message(REPORT_DB_NAME)
+
     def run_tournament(self):
         """Run the tournament.
         Ask to write the results in a report."""
-        self.tournament.reset_players_scores()
+        if self.tournament.played_rounds == BEGINNING_PLAYED_ROUNDS_NUMBER:
+            self.tournament.reset_players_scores()
+
         for tournament_round in self.tournament.rounds:
+            if tournament_round <= self.tournament.played_rounds:
+                continue
             tournament_round.set_beginning_time(str(datetime.now()))
             self.tournament_controller.make_a_round(tournament_round,
                                                     self.tournament_view,
                                                     self.tournament.players)
             tournament_round.set_ending_time(str(datetime.now()))
+            self.tournament.played_rounds += 1
+            if not self.tournament.all_rounds_played():
+                continue_next_round = self.tournament_view.prompt_continue_next_round()
+                if continue_next_round:
+                    continue
+                else:
+                    break
+
         self.tournament_controller.sort_players_by_score(self.tournament.players)
-        self.tournament_view.show_tournament_results(self.tournament.players)
-        
-        save_report = self.view.prompt_ask_save_report()
-        if save_report:
-            self.tournament.save(self.report_db)
-            self.view.saved_report_message(REPORT_DB_NAME)
+        if self.tournament.all_rounds_played():
+            self.tournament_view.show_tournament_results(self.tournament.players)
+
+        self.save_report(self.report_db)
 
     def run(self):
         state = MENU_STATE
@@ -163,7 +179,7 @@ class Controller:
 
         while running:
             if state == MENU_STATE:
-                state = self.view.menu_message()
+                state = self.view.menu_message(self.tournament)
                 print(state)
 
             if state == MANAGE_TOURNAMENT_STATE:
@@ -183,9 +199,12 @@ class Controller:
                     self.run_tournament()
                     state = MENU_STATE
 
-            if state == SHOW_REPORT_STATE:
+            if state == LOAD_REPORT_STATE:
                 self.load_played_tournament(self.report_db)
                 self.tournament_view.show_tournament_results(self.tournament.players)
+                state = MENU_STATE
+
+            if state == SHOW_REPORT_STATE:
                 state = MENU_STATE
 
             if state == QUIT_STATE:

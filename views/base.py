@@ -13,13 +13,16 @@ class View:
         print(SEPARATOR)
         print(f"Bienvenue sur {APP_NAME}.")
 
-    def menu_message(self) -> int:
+    def menu_message(self, tournament: Tournament) -> int:
         print(SEPARATOR)
         print("Que souhaitez-vous faire ?")
         print(f"Gérer les informations du tournois. ({MANAGE_TOURNAMENT_STATE})")
         print(f"Gérer la liste des joueurs. ({MANAGE_PLAYERS_LIST_STATE})")
         print(f"Entrer les scores du tournois en cours. ({RUN_TOURNAMENT_STATE})")
-        print(f"Afficher le rapport d'un tournois passé. ({SHOW_REPORT_STATE})")
+        if tournament.all_rounds_played():
+            print(f"Voir les rapports {SHOW_REPORT_STATE}")
+        print(f"Charger les données d'un tournois passé/en cours. ({LOAD_REPORT_STATE})")
+
         print(f"Quitter l'application. ({QUIT_STATE})")
         state = input('')
         try:
@@ -28,6 +31,8 @@ class View:
             return MENU_STATE
         state = int(state)
         if state in STATES:
+            return state
+        elif state == SHOW_REPORT_STATE and tournament.all_rounds_played():
             return state
         else:
             return MENU_STATE

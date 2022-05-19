@@ -78,7 +78,7 @@ class SwissSystemController:
             self.sort_players_by_score(players)
             matches = self._make_matches_list(players)
 
-        tournament_view.show_matches_list(matches)
+        tournament_view.show_matches_list(tournament_round, matches)
 
         for match in matches:
             new_match = tournament_view.prompt_enter_match_score(match)

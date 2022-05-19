@@ -3,14 +3,15 @@ from typing import List
 
 from constants import *
 from models.match import Match, Result
+from models.round import Round
 from models.player import Player
 
 
 class TournamentView:
-    def show_matches_list(self, matches):
+    def show_matches_list(self, tournament_round: Round, matches: List[tuple]):
         """Print the matches of the turn."""
         print(SEPARATOR)
-        print(f"Liste des matchs du tour :")
+        print(f"Liste des matchs du {tournament_round.name} :")
         for match in matches:
             print(str(match))
         print(SEPARATOR)
@@ -40,7 +41,18 @@ class TournamentView:
         match = Match(Result(first_player, first_player_score), Result(second_player, second_player_score))
         return match
 
+    def prompt_continue_next_round(self):
+        """Prompt to ask to continue to the next round."""
+        print(SEPARATOR)
+        while True:
+            continue_next_round = input(f"Souhaitez-vous passer au tour suivant ? ({CONTINUE_NEXT_ROUND_TRUE_PROMPT}/{CONTINUE_NEXT_ROUND_FALSE_PROMPT})")
+            if continue_next_round == CONTINUE_NEXT_ROUND_TRUE_PROMPT:
+                return True
+            elif continue_next_round == CONTINUE_NEXT_ROUND_FALSE_PROMPT:
+                return False
+
     def show_tournament_results(self, players: List[Player]):
+        """Show the results at the end of the tournament."""
         print(SEPARATOR)
         print("Résultats du tournois : ")
         for player in players:

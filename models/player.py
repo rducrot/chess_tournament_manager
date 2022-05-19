@@ -31,12 +31,15 @@ class Player:
         return self._id == other
 
     def get_id(self):
+        """Return the id of the player."""
         return self._id
 
     def set_id(self, player_id):
+        """Set the id of the player."""
         self._id = player_id
 
     def reset_score(self):
+        """Reset the score of the player."""
         self.score = 0
 
     def save(self, db: TinyDB):
