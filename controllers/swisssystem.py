@@ -75,7 +75,7 @@ class SwissSystemController:
         tournament_view.show_matches_list(tournament_round, matches)
 
         for match in matches:
-            new_match = tournament_view.prompt_enter_match_score(match)
-            tournament_round.matches.append(new_match)
+            played_match = tournament_view.prompt_enter_match_score(match)
+            tournament_round.matches.append(played_match)
         for player in tournament.players:
-            self.update_player_score(player, tournament_round.matches)
+            player.update_score(tournament_round.matches)

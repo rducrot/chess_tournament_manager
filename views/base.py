@@ -21,8 +21,8 @@ class View:
         print(f"Gérer la liste des joueurs. ({MANAGE_PLAYERS_LIST_STATE})")
         print(f"Entrer les scores du tournois en cours. ({RUN_TOURNAMENT_STATE})")
         print(f"Charger les données d'un tournois passé/en cours. ({LOAD_REPORT_STATE})")
-        if tournament.all_rounds_played():
-            print(f"Voir les rapports ({SHOW_REPORT_STATE})")
+        if tournament and tournament.all_rounds_played():
+                print(f"Voir les rapports ({SHOW_REPORT_STATE})")
 
         print(f"Quitter l'application. ({QUIT_STATE})")
         state = input('')
@@ -142,50 +142,3 @@ class View:
     def saved_report_message(self, db_name):
         """Notify that the report has been saved."""
         print(f"Rapport enregistré dans {db_name}")
-
-    def show_report_message(self, tournament: Tournament):
-        """Print the menu to chose a report. Return a choice."""
-        print(SEPARATOR)
-        print(f"Rapport du tournois {tournament.name}")
-        print("Que souhaitez-vous afficher ?")
-        print(f"Liste des joueurs par ordre alphabétique ({SHOW_PLAYERS_ALPHABETIC_PROMPT})")
-        print(f"Liste des joueurs par rang ({SHOW_PLAYERS_RANK_PROMPT})")
-        print(f"Liste des joueurs par score ({SHOW_PLAYERS_SCORE_PROMPT})")
-        print(f"Liste des tours ({SHOW_ROUNDS_LIST_PROMPT})")
-        print(f"Liste des matchs ({SHOW_MATCHES_LIST_PROMPT})")
-        report_choice = input()
-
-        try:
-            report_choice = int(report_choice)
-        except ValueError:
-            return report_choice
-        report_choice = int(report_choice)
-
-        return report_choice
-
-    def show_players(self, sort_type: int, tournament: Tournament):
-        """Show the players of the tournament by chosen sort type."""
-        print(SEPARATOR)
-        if sort_type == SORT_BY_NAME:
-            tournament.sort_players_by_name()
-            print("Liste des joueurs par ordre alphabétique : ")
-        elif sort_type == SORT_BY_RANK:
-            tournament.sort_players_by_rank()
-            print("Liste des joueurs par rang : ")
-        elif sort_type == SORT_BY_SCORE:
-            tournament.sort_players_by_score()
-            print("Résultats du tournois (Liste des joueurs par score) : ")
-        for player in tournament.players:
-            print(player)
-
-    def show_rounds(self, tournament: Tournament):
-        print(SEPARATOR)
-        for tournament_round in tournament.rounds:
-            print(tournament_round)
-
-    def show_matches(self, tournament: Tournament):
-        print(SEPARATOR)
-        for tournament_round in tournament.rounds:
-            print(f"Résultats du {tournament_round.name} :")
-            for match in tournament_round.matches:
-                print(match)

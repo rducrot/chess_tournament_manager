@@ -1,3 +1,3 @@
 """Define the views."""
 
-__all__ = ['base', 'tournament']
+__all__ = ["base", "report", "tournament"]

@@ -1,3 +1,3 @@
 """Models package."""
 
-__all__ = ['tournament', 'player', 'round', 'match']
+__all__ = ["tournament", "player", "round", "match"]

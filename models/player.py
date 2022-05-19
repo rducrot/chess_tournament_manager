@@ -42,6 +42,13 @@ class Player:
         """Reset the score of the player."""
         self.score = 0
 
+    def update_score(self, matches):
+        """Update the total score of a player with the result of the match."""
+        for match in matches:
+            for result in match:
+                if self == result.player:
+                    self.score += result.score
+
     def save(self, db: TinyDB):
         """Save the player to the database."""
         players_table = db.table(DB_TABLE_PLAYERS)
