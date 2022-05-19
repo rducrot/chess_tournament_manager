@@ -1,4 +1,4 @@
-"""Base view."""
+"""Define the Base View."""
 from typing import List
 
 from constants import *
@@ -13,24 +13,27 @@ class View:
         print(SEPARATOR)
         print(f"Bienvenue sur {APP_NAME}.")
 
-    def menu_message(self, tournament: Tournament) -> int:
+    def menu_message(self, tournament: Tournament):
+        """Print the main menu. Return a menu choice."""
         print(SEPARATOR)
         print("Que souhaitez-vous faire ?")
         print(f"Gérer les informations du tournois. ({MANAGE_TOURNAMENT_STATE})")
         print(f"Gérer la liste des joueurs. ({MANAGE_PLAYERS_LIST_STATE})")
         print(f"Entrer les scores du tournois en cours. ({RUN_TOURNAMENT_STATE})")
-        if tournament.all_rounds_played():
-            print(f"Voir les rapports {SHOW_REPORT_STATE}")
         print(f"Charger les données d'un tournois passé/en cours. ({LOAD_REPORT_STATE})")
+        if tournament.all_rounds_played():
+            print(f"Voir les rapports ({SHOW_REPORT_STATE})")
 
         print(f"Quitter l'application. ({QUIT_STATE})")
         state = input('')
+        if state == QUIT_STATE:
+            return state
         try:
             state = int(state)
         except ValueError:
             return MENU_STATE
         state = int(state)
-        if state in STATES:
+        if state in BASIC_STATES:
             return state
         elif state == SHOW_REPORT_STATE and tournament.all_rounds_played():
             return state
@@ -129,6 +132,7 @@ class View:
         return new_player
 
     def prompt_ask_save_report(self):
+        """Prompt to save a report for the current tournament."""
         print(SEPARATOR)
         save_report = input("Souhaitez-vous enregistrer un rapport de tournois ? (O/N) ")
         if save_report != SAVE_RESULTS_PROMPT:
@@ -136,4 +140,52 @@ class View:
         return True
 
     def saved_report_message(self, db_name):
+        """Notify that the report has been saved."""
         print(f"Rapport enregistré dans {db_name}")
+
+    def show_report_message(self, tournament: Tournament):
+        """Print the menu to chose a report. Return a choice."""
+        print(SEPARATOR)
+        print(f"Rapport du tournois {tournament.name}")
+        print("Que souhaitez-vous afficher ?")
+        print(f"Liste des joueurs par ordre alphabétique ({SHOW_PLAYERS_ALPHABETIC_PROMPT})")
+        print(f"Liste des joueurs par rang ({SHOW_PLAYERS_RANK_PROMPT})")
+        print(f"Liste des joueurs par score ({SHOW_PLAYERS_SCORE_PROMPT})")
+        print(f"Liste des tours ({SHOW_ROUNDS_LIST_PROMPT})")
+        print(f"Liste des matchs ({SHOW_MATCHES_LIST_PROMPT})")
+        report_choice = input()
+
+        try:
+            report_choice = int(report_choice)
+        except ValueError:
+            return report_choice
+        report_choice = int(report_choice)
+
+        return report_choice
+
+    def show_players(self, sort_type: int, tournament: Tournament):
+        """Show the players of the tournament by chosen sort type."""
+        print(SEPARATOR)
+        if sort_type == SORT_BY_NAME:
+            tournament.sort_players_by_name()
+            print("Liste des joueurs par ordre alphabétique : ")
+        elif sort_type == SORT_BY_RANK:
+            tournament.sort_players_by_rank()
+            print("Liste des joueurs par rang : ")
+        elif sort_type == SORT_BY_SCORE:
+            tournament.sort_players_by_score()
+            print("Résultats du tournois (Liste des joueurs par score) : ")
+        for player in tournament.players:
+            print(player)
+
+    def show_rounds(self, tournament: Tournament):
+        print(SEPARATOR)
+        for tournament_round in tournament.rounds:
+            print(tournament_round)
+
+    def show_matches(self, tournament: Tournament):
+        print(SEPARATOR)
+        for tournament_round in tournament.rounds:
+            print(f"Résultats du {tournament_round.name} :")
+            for match in tournament_round.matches:
+                print(match)

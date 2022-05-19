@@ -15,6 +15,7 @@ from .swisssystem import SwissSystemController
 
 class Controller:
     """Main controller."""
+
     def __init__(self, view: View,
                  tournament_view: TournamentView,
                  tournament_controller: SwissSystemController,
@@ -104,7 +105,7 @@ class Controller:
         self._load_players(db)
         self._load_rounds(db)
         self._calculate_players_scores()
-        self.tournament_controller.sort_players_by_score(self.tournament.players)
+        self.tournament.sort_players_by_score()
 
     def manage_tournament_information(self):
         """Ask to initialize a new tournament or use the existing one."""
@@ -124,7 +125,7 @@ class Controller:
             self.view.empty_players_list_message()
             update_players_list = True
         else:
-            self.tournament_controller.sort_players_by_rank(self.tournament.players)
+            self.tournament.sort_players_by_rank()
             update_players_list = self.view.prompt_ask_update_players_list(self.tournament.players)
         if update_players_list:
             self.tournament.reset_players_list()
@@ -151,7 +152,7 @@ class Controller:
             tournament_round.set_beginning_time(str(datetime.now()))
             self.tournament_controller.make_a_round(tournament_round,
                                                     self.tournament_view,
-                                                    self.tournament.players)
+                                                    self.tournament)
             tournament_round.set_ending_time(str(datetime.now()))
             self.tournament.played_rounds += 1
             if not self.tournament.all_rounds_played():
@@ -161,11 +162,25 @@ class Controller:
                 else:
                     break
 
-        self.tournament_controller.sort_players_by_score(self.tournament.players)
+        self.tournament.sort_players_by_score()
         if self.tournament.all_rounds_played():
-            self.tournament_view.show_tournament_results(self.tournament.players)
+            self.view.show_players(SORT_BY_SCORE, self.tournament)
 
         self.save_report(self.report_db)
+
+    def show_report(self):
+        """Show the selected tournament report."""
+        report_choice = self.view.show_report_message(self.tournament)
+        if report_choice == SHOW_PLAYERS_ALPHABETIC_PROMPT:
+            self.view.show_players(SORT_BY_NAME, self.tournament)
+        if report_choice == SHOW_PLAYERS_RANK_PROMPT:
+            self.view.show_players(SORT_BY_RANK, self.tournament)
+        if report_choice == SHOW_PLAYERS_SCORE_PROMPT:
+            self.view.show_players(SHOW_PLAYERS_SCORE_PROMPT, self.tournament)
+        if report_choice == SHOW_ROUNDS_LIST_PROMPT:
+            self.view.show_rounds(self.tournament)
+        if report_choice == SHOW_MATCHES_LIST_PROMPT:
+            self.view.show_matches(self.tournament)
 
     def run(self):
         state = MENU_STATE
@@ -201,10 +216,11 @@ class Controller:
 
             if state == LOAD_REPORT_STATE:
                 self.load_played_tournament(self.report_db)
-                self.tournament_view.show_tournament_results(self.tournament.players)
+                print(self.tournament)
                 state = MENU_STATE
 
             if state == SHOW_REPORT_STATE:
+                self.show_report()
                 state = MENU_STATE
 
             if state == QUIT_STATE:

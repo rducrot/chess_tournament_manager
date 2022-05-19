@@ -49,6 +49,18 @@ class Tournament:
         for player in self.players:
             player.reset_score()
 
+    def sort_players_by_name(self):
+        """Sort the players list by player name."""
+        self.players.sort(key=lambda x: (x.last_name, x.first_name))
+
+    def sort_players_by_rank(self):
+        """Sort the players list by player rank."""
+        self.players.sort(key=lambda x: x.rank, reverse=True)
+
+    def sort_players_by_score(self):
+        """Sort the players list by player score."""
+        self.players.sort(key=lambda x: (x.score, x.rank), reverse=True)
+
     def init_rounds(self):
         """Initialize the rounds of the tournament using number_of_rounds."""
         round_number = 1

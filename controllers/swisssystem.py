@@ -1,22 +1,16 @@
-"""Define the Swiss System Tournament controller."""
+"""Define the Swiss System Controller."""
 from typing import List
 
-from constants import FIRST_ROUND_ID
+from constants import *
 from models.match import Match
 from models.player import Player
 from models.round import Round
+from models.tournament import Tournament
 from views.tournament import TournamentView
 
 
 class SwissSystemController:
-
-    def sort_players_by_rank(self, players: List[Player]):
-        """Sort a list of players by player rank."""
-        players.sort(key=lambda x: x.rank, reverse=True)
-
-    def sort_players_by_score(self, players: List[Player]):
-        """Sort a list of players by player score."""
-        players.sort(key=lambda x: (x.score, x.rank), reverse=True)
+    """Tournament controller implementing the Swiss System."""
 
     def _make_matches_list_first_round(self, players: List[Player]) -> List[tuple]:
         """Define a list of matches for the first round."""
@@ -69,19 +63,19 @@ class SwissSystemController:
                 if player == result.player:
                     player.score += result.score
 
-    def make_a_round(self, tournament_round: Round, tournament_view: TournamentView, players: List[Player]):
+    def make_a_round(self, tournament_round: Round, tournament_view: TournamentView, tournament: Tournament):
         """Implements the progression of a round following the swiss system."""
         if tournament_round == FIRST_ROUND_ID:
-            self.sort_players_by_rank(players)
-            matches = self._make_matches_list_first_round(players)
+            tournament.sort_players_by_rank()
+            matches = self._make_matches_list_first_round(tournament.players)
         else:
-            self.sort_players_by_score(players)
-            matches = self._make_matches_list(players)
+            tournament.sort_players_by_score()
+            matches = self._make_matches_list(tournament.players)
 
         tournament_view.show_matches_list(tournament_round, matches)
 
         for match in matches:
             new_match = tournament_view.prompt_enter_match_score(match)
             tournament_round.matches.append(new_match)
-        for player in players:
+        for player in tournament.players:
             self.update_player_score(player, tournament_round.matches)
