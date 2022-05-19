@@ -142,3 +142,9 @@ class View:
     def saved_report_message(self, db_name):
         """Notify that the report has been saved."""
         print(f"Rapport enregistré dans {db_name}")
+
+    def no_saved_report_message(self):
+        """Notify that no saved report can be loaded."""
+        print(SEPARATOR)
+        print("Aucun rapport trouvé.")
+        print("Veuillez d'abord sauvegarder les scores du tournois.")

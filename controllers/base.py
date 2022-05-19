@@ -129,7 +129,14 @@ class Controller:
 
             if state == LOAD_REPORT_STATE:
                 self.tournament = self.data_load_controller.load_played_tournament(self.report_db)
-                print(self.tournament)
+                if self.tournament is not None:
+                    print(self.tournament)
+                else:
+                    self.view.no_saved_report_message()
+                    # Reload the tournament from db if there is no report_db
+                    self.tournament = self.data_load_controller.load_tournament(self.db)
+                    if self.tournament is not None:
+                        self.tournament.players = self.data_load_controller.load_players(self.db)
                 state = MENU_STATE
 
             if state == SHOW_REPORT_STATE:

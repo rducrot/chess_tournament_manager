@@ -87,9 +87,10 @@ class DataLoadController:
     def load_played_tournament(self, db: TinyDB) -> Tournament:
         """Load a tournament with its players, rounds and played matches from a database."""
         tournament = self.load_tournament(db)
-        tournament.players = self.load_players(db)
-        tournament.rounds = self._load_rounds(tournament, db)
-        self._calculate_players_scores(tournament)
-        tournament.sort_players_by_score()
+        if tournament is not None:
+            tournament.players = self.load_players(db)
+            tournament.rounds = self._load_rounds(tournament, db)
+            self._calculate_players_scores(tournament)
+            tournament.sort_players_by_score()
 
         return tournament
