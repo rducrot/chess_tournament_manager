@@ -9,7 +9,7 @@ class ReportView:
     def show_report_menu(self, tournament: Tournament):
         """Print the menu to chose a report. Return a choice."""
         print(SEPARATOR)
-        print(f"Rapport du tournois {tournament.name}")
+        print(f"Rapport du tournoi {tournament.name}")
         print("Que souhaitez-vous afficher ?")
         print(f"Liste des joueurs par ordre alphabétique ({SHOW_PLAYERS_ALPHABETIC_PROMPT})")
         print(f"Liste des joueurs par rang ({SHOW_PLAYERS_RANK_PROMPT})")
@@ -37,7 +37,7 @@ class ReportView:
             print("Liste des joueurs par rang : ")
         elif sort_type == SORT_BY_SCORE:
             tournament.sort_players_by_score()
-            print("Résultats du tournois (Liste des joueurs par score) : ")
+            print("Résultats du tournoi (Liste des joueurs par score) : ")
         for player in tournament.players:
             print(player)
 

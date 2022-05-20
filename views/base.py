@@ -17,10 +17,10 @@ class View:
         """Print the main menu. Return a menu choice."""
         print(SEPARATOR)
         print("Que souhaitez-vous faire ?")
-        print(f"Gérer les informations du tournois. ({MANAGE_TOURNAMENT_STATE})")
+        print(f"Gérer les informations du tournoi. ({MANAGE_TOURNAMENT_STATE})")
         print(f"Gérer la liste des joueurs. ({MANAGE_PLAYERS_LIST_STATE})")
-        print(f"Entrer les scores du tournois en cours. ({RUN_TOURNAMENT_STATE})")
-        print(f"Charger les données d'un tournois passé/en cours. ({LOAD_REPORT_STATE})")
+        print(f"Entrer les scores du tournoi en cours. ({RUN_TOURNAMENT_STATE})")
+        print(f"Charger les données d'un tournoi passé/en cours. ({LOAD_REPORT_STATE})")
         if tournament and tournament.all_rounds_played():
             print(f"Voir les rapports ({SHOW_REPORT_STATE})")
 
@@ -42,12 +42,12 @@ class View:
 
     def no_tournament_message(self):
         """Message if no tournament found."""
-        print("Pas de tournois en cours. Veuillez entrer les informations du tournois : ")
+        print("Pas de tournoi en cours. Veuillez entrer les informations du tournois : ")
 
     def prompt_ask_new_tournament(self, tournament: Tournament) -> bool:
         """Ask for a new tournament."""
         print(SEPARATOR)
-        print("Le tournois actuel est le suivant : ")
+        print("Le tournoi actuel est le suivant : ")
         print(str(tournament))
         update_tournament = input(f"Souhaitez-vous initialiser un nouveau tournoi ? ({UPDATE_TOURNAMENT_PROMPT}/N) ")
         if update_tournament != UPDATE_TOURNAMENT_PROMPT:
@@ -57,7 +57,7 @@ class View:
     def prompt_update_current_tournament(self) -> Tournament:
         """Prompt to add a tournament."""
         print(SEPARATOR)
-        name = input("Nom du tournois : ")
+        name = input("Nom du tournoi : ")
         place = input("Lieu : ")
         date = input("Date : ")
         while True:
@@ -96,7 +96,7 @@ class View:
     def prompt_ask_update_players_list(self, players: List[Player]) -> bool:
         """Ask to update the current players list."""
         print(SEPARATOR)
-        print("Les joueurs du tournois sont les suivants : ")
+        print("Les joueurs du tournoi sont les suivants : ")
         for player in players:
             print(player)
         update_players_list = input("Souhaitez-vous mettre à jour la liste des joueurs ? "
@@ -135,7 +135,7 @@ class View:
     def prompt_ask_save_report(self):
         """Prompt to save a report for the current tournament."""
         print(SEPARATOR)
-        save_report = input("Souhaitez-vous enregistrer un rapport de tournois ? (O/N) ")
+        save_report = input("Souhaitez-vous enregistrer un rapport de tournoi ? (O/N) ")
         if save_report != SAVE_RESULTS_PROMPT:
             return False
         return True
@@ -148,4 +148,4 @@ class View:
         """Notify that no saved report can be loaded."""
         print(SEPARATOR)
         print("Aucun rapport trouvé.")
-        print("Veuillez d'abord sauvegarder les scores du tournois.")
+        print("Veuillez d'abord sauvegarder les scores du tournoi.")
