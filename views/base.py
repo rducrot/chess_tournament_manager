@@ -22,7 +22,7 @@ class View:
         print(f"Entrer les scores du tournois en cours. ({RUN_TOURNAMENT_STATE})")
         print(f"Charger les données d'un tournois passé/en cours. ({LOAD_REPORT_STATE})")
         if tournament and tournament.all_rounds_played():
-                print(f"Voir les rapports ({SHOW_REPORT_STATE})")
+            print(f"Voir les rapports ({SHOW_REPORT_STATE})")
 
         print(f"Quitter l'application. ({QUIT_STATE})")
         state = input('')
@@ -99,7 +99,8 @@ class View:
         print("Les joueurs du tournois sont les suivants : ")
         for player in players:
             print(player)
-        update_players_list = input(f"Souhaitez-vous mettre à jour la liste des joueurs ? ({UPDATE_PLAYERS_LIST_PROMPT}/N) ")
+        update_players_list = input("Souhaitez-vous mettre à jour la liste des joueurs ? "
+                                    f"({UPDATE_PLAYERS_LIST_PROMPT}/N) ")
         if update_players_list != UPDATE_PLAYERS_LIST_PROMPT:
             return False
         return True

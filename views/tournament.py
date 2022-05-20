@@ -45,7 +45,8 @@ class TournamentView:
         """Prompt to ask to continue to the next round."""
         print(SEPARATOR)
         while True:
-            continue_next_round = input(f"Souhaitez-vous passer au tour suivant ? (O/{CONTINUE_NEXT_ROUND_FALSE_PROMPT})")
+            continue_next_round = input("Souhaitez-vous passer au tour suivant ? "
+                                        f"(O/{CONTINUE_NEXT_ROUND_FALSE_PROMPT})")
             if continue_next_round == CONTINUE_NEXT_ROUND_FALSE_PROMPT:
                 return False
             return True

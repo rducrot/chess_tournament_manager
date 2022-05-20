@@ -1,4 +1,10 @@
 [flake8]
+max-line-length = 119
+ignore =
+    # Constants are imported with "from constants import *".
+    F403
+    # Avoid "May be undefined" alerts from imported constants.
+    F405
 exclude =
     venv
     __pycache__
