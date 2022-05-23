@@ -1,7 +1,7 @@
 """Define the Swiss System Controller."""
 from typing import List
 
-from constants import *
+import constants
 from models.match import Match
 from models.player import Player
 from models.round import Round
@@ -63,19 +63,19 @@ class SwissSystemController:
                 if player == result.player:
                     player.score += result.score
 
-    def make_a_round(self, tournament_round: Round, tournament_view: TournamentView, tournament: Tournament):
+    def make_a_round(self, round_: Round, tournament_view: TournamentView, tournament: Tournament):
         """Implements the progression of a round following the swiss system."""
-        if tournament_round == FIRST_ROUND_ID:
+        if round_ == constants.FIRST_ROUND_ID:
             tournament.sort_players_by_rank()
             matches = self._make_matches_list_first_round(tournament.players)
         else:
             tournament.sort_players_by_score()
             matches = self._make_matches_list(tournament.players)
 
-        tournament_view.show_matches_list(tournament_round, matches)
+        tournament_view.show_matches_list(round_, matches)
 
         for match in matches:
             played_match = tournament_view.prompt_enter_match_score(match)
-            tournament_round.matches.append(played_match)
+            round_.matches.append(played_match)
         for player in tournament.players:
-            player.update_score(tournament_round.matches)
+            player.update_score(round_.matches)

@@ -3,11 +3,12 @@ from itertools import count
 
 from tinydb import TinyDB
 
-from constants import *
+import constants
 
 
 class Player:
     """Player class."""
+
     id_iter = count()
 
     def __init__(self, last_name, first_name,
@@ -51,13 +52,13 @@ class Player:
 
     def save(self, db: TinyDB):
         """Save the player to the database."""
-        players_table = db.table(DB_TABLE_PLAYERS)
+        players_table = db.table(constants.DB_TABLE_PLAYERS)
         serialized_player = {
-            DB_PLAYER_ID: self.get_id(),
-            DB_PLAYER_LAST_NAME: self.last_name,
-            DB_PLAYER_FIRST_NAME: self.first_name,
-            DB_PLAYER_DATE_OF_BIRTH: self.date_of_birth,
-            DB_PLAYER_GENDER: self.gender,
-            DB_PLAYER_RANK: self.rank
+            constants.DB_PLAYER_ID: self.get_id(),
+            constants.DB_PLAYER_LAST_NAME: self.last_name,
+            constants.DB_PLAYER_FIRST_NAME: self.first_name,
+            constants.DB_PLAYER_DATE_OF_BIRTH: self.date_of_birth,
+            constants.DB_PLAYER_GENDER: self.gender,
+            constants.DB_PLAYER_RANK: self.rank
         }
         players_table.insert(serialized_player)

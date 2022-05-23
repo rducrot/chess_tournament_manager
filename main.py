@@ -1,7 +1,7 @@
 """App entry point."""
 from tinydb import TinyDB
 
-from constants import *
+import constants
 from controllers.base import Controller
 from controllers.dataload import DataLoadController
 from controllers.swisssystem import SwissSystemController
@@ -18,8 +18,8 @@ def main():
     data_load_controller = DataLoadController()
     tournament_controller = SwissSystemController()
 
-    db = TinyDB(DB_NAME)
-    report_db = TinyDB(REPORT_DB_NAME)
+    db = TinyDB(constants.DB_NAME)
+    report_db = TinyDB(constants.REPORT_DB_NAME)
 
     app = Controller(view,
                      tournament_view,

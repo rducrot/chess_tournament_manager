@@ -3,7 +3,7 @@ from typing import List
 
 from tinydb import TinyDB
 
-from constants import *
+import constants
 from .match import Match
 
 
@@ -57,14 +57,14 @@ class Round:
 
     def save(self, db: TinyDB):
         """Save the round to the database."""
-        rounds_table = db.table(DB_TABLE_ROUNDS)
-        serialized_round = {DB_ROUND_ID: self.get_id(),
-                            DB_ROUND_BEGINNING_TIME: self.beginning_time,
-                            DB_ROUND_ENDING_TIME: self.ending_time,
-                            DB_ROUND_MATCHES_LIST: {}}
+        rounds_table = db.table(constants.DB_TABLE_ROUNDS)
+        serialized_round = {constants.DB_ROUND_ID: self.get_id(),
+                            constants.DB_ROUND_BEGINNING_TIME: self.beginning_time,
+                            constants.DB_ROUND_ENDING_TIME: self.ending_time,
+                            constants.DB_ROUND_MATCHES_LIST: {}}
         match_id = 1
         for match in self.matches:
             serialized_match = match.serialize(match_id)
-            serialized_round[DB_ROUND_MATCHES_LIST].update(serialized_match)
+            serialized_round[constants.DB_ROUND_MATCHES_LIST].update(serialized_match)
             match_id += 1
         rounds_table.insert(serialized_round)

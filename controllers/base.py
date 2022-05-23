@@ -1,9 +1,9 @@
-"""Define the main controller."""
+"""Define the Main Controller."""
 from datetime import datetime
 
 from tinydb import TinyDB
 
-from constants import *
+import constants
 from views.base import View
 from views.report import ReportView
 from views.tournament import TournamentView
@@ -52,24 +52,24 @@ class Controller:
             update_players_list = self.view.prompt_ask_update_players_list(self.tournament.players)
         if update_players_list:
             self.tournament.reset_players_list()
-            while len(self.tournament.players) < NUMBER_OF_PLAYERS:
+            while len(self.tournament.players) < constants.NUMBER_OF_PLAYERS:
                 new_player = self.view.prompt_add_a_player()
                 self.tournament.players.append(new_player)
             self.tournament.save_players(self.db)
 
     def run_tournament(self):
         """Run the tournament."""
-        if self.tournament.played_rounds == BEGINNING_PLAYED_ROUNDS_NUMBER:
+        if self.tournament.played_rounds == constants.BEGINNING_PLAYED_ROUNDS_NUMBER:
             self.tournament.reset_players_scores()
 
-        for tournament_round in self.tournament.rounds:
-            if tournament_round <= self.tournament.played_rounds:
+        for round_ in self.tournament.rounds:
+            if round_ <= self.tournament.played_rounds:
                 continue
-            tournament_round.set_beginning_time(str(datetime.now()))
-            self.tournament_controller.make_a_round(tournament_round,
+            round_.set_beginning_time(str(datetime.now()))
+            self.tournament_controller.make_a_round(round_,
                                                     self.tournament_view,
                                                     self.tournament)
-            tournament_round.set_ending_time(str(datetime.now()))
+            round_.set_ending_time(str(datetime.now()))
             self.tournament.played_rounds += 1
 
             if not self.tournament.all_rounds_played():
@@ -81,7 +81,7 @@ class Controller:
 
         self.tournament.sort_players_by_score()
         if self.tournament.all_rounds_played():
-            self.report_view.show_players(SORT_BY_SCORE, self.tournament)
+            self.report_view.show_players(constants.SORT_BY_SCORE, self.tournament)
 
     def save_report(self, db):
         """Ask to save the results of the tournament in a report.
@@ -89,10 +89,11 @@ class Controller:
         save_report = self.view.prompt_ask_save_report()
         if save_report:
             self.tournament.save(db)
-            self.view.saved_report_message(REPORT_DB_NAME)
+            self.view.saved_report_message(constants.REPORT_DB_NAME)
 
     def run(self):
-        state = MENU_STATE
+        """Run the application."""
+        state = constants.MENU_STATE
         running = True
 
         self.view.initial_message()
@@ -102,32 +103,32 @@ class Controller:
             self.tournament.players = self.data_load_controller.load_players(self.db)
 
         while running:
-            if state == MENU_STATE:
+            if state == constants.MENU_STATE:
                 state = self.view.menu_message(self.tournament)
                 print(state)
 
-            if state == MANAGE_TOURNAMENT_STATE:
+            if state == constants.MANAGE_TOURNAMENT_STATE:
                 self.manage_tournament_information()
-                state = MENU_STATE
+                state = constants.MENU_STATE
 
-            if state == MANAGE_PLAYERS_LIST_STATE:
+            if state == constants.MANAGE_PLAYERS_LIST_STATE:
                 if self.tournament is None:
-                    state = MANAGE_TOURNAMENT_STATE
+                    state = constants.MANAGE_TOURNAMENT_STATE
                 else:
                     self.manage_players_list()
-                    state = MENU_STATE
+                    state = constants.MENU_STATE
 
-            if state == RUN_TOURNAMENT_STATE:
+            if state == constants.RUN_TOURNAMENT_STATE:
                 if self.tournament is None:
-                    state = MANAGE_TOURNAMENT_STATE
+                    state = constants.MANAGE_TOURNAMENT_STATE
                 elif self.tournament.players_list_is_empty():
-                    state = MANAGE_PLAYERS_LIST_STATE
+                    state = constants.MANAGE_PLAYERS_LIST_STATE
                 else:
                     self.run_tournament()
                     self.save_report(self.report_db)
-                    state = MENU_STATE
+                    state = constants.MENU_STATE
 
-            if state == LOAD_REPORT_STATE:
+            if state == constants.LOAD_REPORT_STATE:
                 self.tournament = self.data_load_controller.load_played_tournament(self.report_db)
                 if self.tournament is not None:
                     print(self.tournament)
@@ -137,12 +138,12 @@ class Controller:
                     self.tournament = self.data_load_controller.load_tournament(self.db)
                     if self.tournament is not None:
                         self.tournament.players = self.data_load_controller.load_players(self.db)
-                state = MENU_STATE
+                state = constants.MENU_STATE
 
-            if state == SHOW_REPORT_STATE:
+            if state == constants.SHOW_REPORT_STATE:
                 report_choice = self.report_view.show_report_menu(self.tournament)
                 self.report_view.show_report(report_choice, self.tournament)
-                state = MENU_STATE
+                state = constants.MENU_STATE
 
-            if state == QUIT_STATE:
+            if state == constants.QUIT_STATE:
                 running = False
